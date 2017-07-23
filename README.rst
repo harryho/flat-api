@@ -15,6 +15,6 @@ Pseu-Sever is:
 - **Zero-Coding to setup Restful API** Pseu-Sever is removed in PseuDB. User needs to create a table first before inserting any data. 
 
 
-.. _Flask-Restful: 
+.. _Flask-Restful: http://flask-restful.readthedocs.io/en/0.3.5/
 .. _json-server: https://github.com/typicode/json-server
 .. _PseuDB: https://github.com/harryho/pseudb
