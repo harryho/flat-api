@@ -20,12 +20,13 @@ setup(
     # metadata for upload to PyPI
     author="Harry Ho",
     author_email="harry.ho_long@yahoo.com",
-    description="is a Zero-Coding restful API server inspired by Json-Server_ and Eve_" 
+    description="is a zero-coding restful API server inspired by Json-Server and Eve" 
                 ". It is designed to be used as fake restful api for development, "
-                " especially for people want to use Python stack.",
+                " especially for people want to stick with Python stack. Setup process "
+                " is less than 1 minute. ",
     license="MIT",
     keywords="database json nosql",
-    url="https://github.com/harryho/pseuserver",
+    url="https://github.com/harryho/pseu-server",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
