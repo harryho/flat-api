@@ -3,7 +3,7 @@ Pseu-Server
 
 |Build Status|
 
-Pseu-Server is a *zero coding* restful API server inspired by Json-Server_ and Eve_. It is designed to be used as fake restful api for development, especially for people want to use Python stack. Setup process is *less than 1 minute*. 
+Pseu-Server is a **zero coding** restful API server inspired by Json-Server_ and Eve_. It is designed to be used as fake restful api for development, especially for people want to use Python stack. Setup process is **less than 1 minute*d*. 
 
 
 Pseu-Sever is:
@@ -46,11 +46,11 @@ User guide
 
 - Test api
 
-- Use postman 
+    - Use postman 
 
         It is most easy way to test the API
 
-- Use curl 
+    - Use curl 
 
 
 .. code-block:: bash
