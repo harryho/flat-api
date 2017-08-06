@@ -19,6 +19,7 @@ User guide
 - Create config.json
 
 .. code-block:: json
+
     {
         "db": "db.json",
         "routes":[
@@ -37,6 +38,7 @@ User guide
 - Launch Pseu-Server. Please make sure the config.json is under current diretory
 
 .. code-block:: bash
+
     $ python3 pseuserver
 
 
