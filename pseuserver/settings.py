@@ -1,7 +1,5 @@
 import sys
 
-__version__ = '0.1'
-
 DEFAULT_CONFIG= 'config.json'
 DEFAULT_DB = 'db.json'
 DEFAULT_MEDIATYPE='application/json'
