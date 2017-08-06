@@ -44,14 +44,11 @@ User guide
     $ python3 pseuserver
 
 
-- Test api
+- Test api via postman 
 
-    - Use postman 
+    It is most easy way to test the API
 
-        It is most easy way to test the API
-
-    - Use curl 
-
+- Test api via curl 
 
 .. code-block:: bash
 
