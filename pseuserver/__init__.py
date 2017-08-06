@@ -42,7 +42,7 @@ from functools import wraps, partial
 import re
 import operator
 from collections import Mapping
-from urllib.parse import urlparse, urljoin
+# from urllib.parse import urlparse, urljoin
 
 from pseuserver.settings import *
 
@@ -130,3 +130,4 @@ class PseuServer(object):
                     self.app.add_url_rule(rule, view_func=rest_api, methods=['GET'])
 
 # __all__= ['PseuServer']
+# __all__ = ('PseuServer')
