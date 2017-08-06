@@ -61,9 +61,9 @@ Stable release
 Nightly build
 *************
 
-- Pseu-Server 1.0.0 - RC1
+- |Pseu-Server 1.0.0 - RC1|
 
-.. Pseu-Server 1.0.0 - RC1 :target: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=1.0.0rc1
+.. |Pseu-Server 1.0.0 - RC1| :target: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=1.0.0rc1
 
 .. |Build Status| image:: https://travis-ci.org/harryho/pseu-server.svg?branch=master
     :target: https://travis-ci.org/harryho/pseu-server
