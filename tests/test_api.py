@@ -15,7 +15,7 @@ class TestApi(unittest.TestCase):
         pseuserver.DEFAULT_CONFIG = 'test.config.json'
         pseuserver.DEFAULT_DB = 'test.db.json'
         this_dir = os.path.dirname(os.path.realpath(__file__))
-        print (this_dir)
+
         cfg_file = os.path.join(this_dir, pseuserver.DEFAULT_CONFIG)
         app = Flask(__name__)
         self.api = PseuServer(app, prefix ='', cfg_file = cfg_file)
@@ -66,7 +66,7 @@ class TestApi(unittest.TestCase):
         sc = response.status_code
         pp(response)
         self.assertEqual(sc, 201)
-        self.assertGreaterEqual(len(json.loads(data.decode())), 1)
+        assert len(json.loads(data.decode()))> 1
 
         response = self.app.delete('/posts')
 
@@ -77,11 +77,12 @@ class TestApi(unittest.TestCase):
         response = self.app.post('/posts', 
             data='{\"text\": \"post 1\", \"author\": \"harry\" }')
 
+
         data = response.data
         sc = response.status_code
         pp(response)
         self.assertEqual(sc, 201)
-        self.assertGreaterEqual(len(json.loads(data.decode())), 1)   
+        assert len(json.loads(data.decode()))> 1  
 
         response=self.app.delete('/posts/1')
         self.assertEqual(response.status_code, 200)

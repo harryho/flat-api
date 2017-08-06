@@ -67,7 +67,7 @@ class TestApiWithPrefix(unittest.TestCase):
         sc = response.status_code
         pp(response)
         self.assertEqual(sc, 201)
-        self.assertGreaterEqual(len(json.loads(data.decode())), 1)
+        assert len(json.loads(data.decode()))> 1  
 
         response = self.app.delete('/api/posts')
 
@@ -82,7 +82,7 @@ class TestApiWithPrefix(unittest.TestCase):
         sc = response.status_code
         pp(response)
         self.assertEqual(sc, 201)
-        self.assertGreaterEqual(len(json.loads(data.decode())), 1)   
+        assert len(json.loads(data.decode()))> 1   
 
         response=self.app.delete('/api/posts/1')
         self.assertEqual(response.status_code, 200)
