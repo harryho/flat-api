@@ -12,7 +12,7 @@ Pseu-Sever is:
 
 - **Json flat file database** Pseu-Server uses PseuDB_ to manage the Json flat file database. PseuServer is a document oriented database. 
 
-- **Zero coding to setup Restful API** Pseu-Sever is removed in PseuServer. User needs to create a table first before inserting any data. 
+- **Zero coding to setup Restful API** Pseu-Sever is designed to use without coding. You just need one config to setup all endpoints you need, then you can use it immediately. 
 
 
 User guide
