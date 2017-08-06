@@ -1,7 +1,0 @@
-{
-    "db": "db.json",
-    "routes":[
-        "/posts",
-        "/comments"
-    ]
-}
