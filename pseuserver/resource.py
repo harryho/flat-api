@@ -7,7 +7,7 @@ from pprint import pprint as pp
 def extract_query(**kwqry):
     _query = None
 
-    print('extract_query')
+    # print('extract_query')
     for key in kwqry:
         if key != RESOURCE_ID and key != RESOURCE_EMBED and key != RESOURCE_EXPAND:
             value = kwqry[key]
@@ -31,26 +31,18 @@ def query(**kwargs):
 
     _query = extract_query(**kwargs[RESOURCE_QUERY]) if RESOURCE_QUERY in kwargs else None
 
-    print( _id)
-    print(_query)
     with PseuDB( _dbf, storage=JSONStorage) as db:
         tb =  db.table(_tb)
         if _id:
-            print( _id)
             obj = tb.get(oid = _id)
-            print( type(obj))
 
             if _embed and obj: 
-                print(_embed)
                 embed = db.table(_embed)
-                print(embed)
                 embed_id = _tb[:-1] + 'Id'
                 embeds = embed.search(where(embed_id) == _id)
-                pp( embeds)
                 obj[_embed] = embeds
             
             if _expand and obj: 
-                print(_expand)
                 expand_id_field = expand_field = _expand[:-1] + 'Id'
 
                 if expand_id_field in obj:
@@ -58,19 +50,16 @@ def query(**kwargs):
                     expand = db.table(_expand)
                     expand_field = _expand[:-1] 
                     expand_elem = expand.get(oid = _id)
-                    pp( expand_elem)
+
                     obj[expand_field] = expand_elem
-            pp(obj)
+            # pp(obj)
 
         elif _query:
-            print(_query)
             obj = tb.search(_query)
-            print(obj)
+
         else:
             obj = tb.all()
         return obj
-
-
 
 def create(**kwargs):
     _dbf = kwargs[CONFIG_DB] or DEFAULT_DB
@@ -105,5 +94,4 @@ def edit(**kwargs):
     with PseuDB( _dbf, storage=JSONStorage) as db:
         tb =  db.table(_tb)
         ids, objs = tb.update(loads(_data.decode()), oids = [_id])
-        # print(ids, objs)
         return objs

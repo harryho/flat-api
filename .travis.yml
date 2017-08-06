@@ -13,8 +13,8 @@ matrix:
   allow_failures:
     - python: nightly
 install:
-  - pip install flask
-  - pip install pseudb
+  - pip install -U flask
+  - pip install -U pseudb
   - pip install -U pytest
   - pip install coverage
   - pip install coveralls

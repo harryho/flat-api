@@ -2,7 +2,6 @@ from flask import Flask, abort, request, make_response, current_app , Response
 from pprint import pprint as pp
 from json import dumps
 from werkzeug.http import HTTP_STATUS_CODES
-# from urllib.parse import  urlparse ,parse_qs ,parse_qsl
 import re
 from pseuserver.resource import *
 
@@ -13,14 +12,22 @@ try:
 except ImportError:
     from urllib.parse import parse_qsl
 
-# try:
-#     from collections import OrderedDict
-# except ImportError:
-#     from ordereddict import OrderedDict
 
 from werkzeug.http import HTTP_STATUS_CODES
 
 PY3 = sys.version_info > (3,)
+
+""" Module that monkey-patches json module when it's imported so
+JSONEncoder.default() automatically checks for a special "to_json()"
+method and uses it to encode the object if found.
+"""
+from json import JSONEncoder
+
+def _default(self, obj):
+    return getattr(obj.__class__, "to_json", _default.default)(obj)
+
+_default.default = JSONEncoder().default  # Save unmodified default.
+JSONEncoder.default = _default # replacement
 
 
 def http_status_message(code):
@@ -48,20 +55,6 @@ def unpack(value):
     return value, 200, {}
 
 
-
-""" Module that monkey-patches json module when it's imported so
-JSONEncoder.default() automatically checks for a special "to_json()"
-method and uses it to encode the object if found.
-"""
-from json import JSONEncoder
-
-def _default(self, obj):
-    return getattr(obj.__class__, "to_json", _default.default)(obj)
-
-_default.default = JSONEncoder().default  # Save unmodified default.
-JSONEncoder.default = _default # replacement
-
-
 def output_json(data, code, headers=None):
     """Makes a Flask response with a JSON encoded body"""
 
@@ -77,38 +70,47 @@ def output_json(data, code, headers=None):
     # always end the json dumps with a new line
     # see https://github.com/mitsuhiko/flask/pull/1262
     dumped = dumps(data, **settings) + "\n"
-
+    
     resp = make_response(dumped, code)
     # resp.headers.extend(headers or {'Content-Type':'application/json'})
     resp.headers['Content-Type'] = 'application/json'
     return resp
 
-def get(  **kwargs):
+def get(**kwargs):
+
     try:
         return output_json(query(**kwargs), 200)
     except Exception  as e:
         return 
 
-def delete(  **kwargs):
+def delete(**kwargs):
     try:
         return output_json(remove(**kwargs), 200)
     except Exception  as e:
         return output_json(e, 404)
 
-def put( **kwargs):
+def put(**kwargs):
     try:
         return output_json(edit(**kwargs), 200)
     except Exception  as e:
         return output_json(e, 404)       
 
-def post( **kwargs):
+def post(**kwargs):
     try:
         return output_json(create(**kwargs), 201)
     except Exception  as e:
         return output_json(e, 404)   
 
 def server_api(prefix, urls, db):
-
+    """Return function restapi as universal endpoint to process most
+    common HTTP methods: GET, POST, PUT, DELETE. 
+    :param prefix: The prefix of each endpoint
+    :type prefix: string or bytes
+    :param urls: The api routes for endpoints
+    :type urls: array of string 
+    :param db: The json database file path
+    :type db: string or bytes
+    """
 
     def restapi(**kwargs):
         _prefix = prefix
@@ -124,7 +126,7 @@ def server_api(prefix, urls, db):
             arg_dict[RESOURCE_QUERY] = kwargs
 
         qs = dict(parse_qsl(req.query_string.decode("utf-8")))
-        pp(qs)
+        # pp(qs)
         if RESOURCE_QUERY not in arg_dict:
             arg_dict[RESOURCE_QUERY]={}
         arg_dict[RESOURCE_QUERY].update(qs)
@@ -137,12 +139,6 @@ def server_api(prefix, urls, db):
                 arg_dict[RESOURCE_DOCUMENT] = _url[_url.rfind('/')+1:]
                 break
 
-        pp(request)
-        pp(kwargs)
-        pp(arg_dict)
-
-        print('------------------------------------------')
-
         if method in ('GET', 'HEAD'):
             response = get( **arg_dict)
         elif method == 'PUT':
@@ -153,12 +149,11 @@ def server_api(prefix, urls, db):
             response = delete( **arg_dict)
         elif method == 'POST':
             arg_dict[RESOURCE_DATA] = req.data
-            # print(arg_dict[RESOURCE_DATA])
             response = post( **arg_dict)
         # elif method == 'OPTIONS':
         #     send_response(resource, response)
         else:
             abort(405)
         return response
-
+   
     return restapi

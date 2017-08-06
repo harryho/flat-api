@@ -15,7 +15,7 @@ class TestApiWithPrefix(unittest.TestCase):
         pseuserver.DEFAULT_CONFIG = 'test.config.json'
         pseuserver.DEFAULT_DB = 'test.db.json'
         this_dir = os.path.dirname(os.path.realpath(__file__))
-        print (this_dir)
+        # print (this_dir)
         cfg_file = os.path.join(this_dir, pseuserver.DEFAULT_CONFIG)
         app = Flask(__name__)
         self.api = PseuServer(app, prefix ='/api', cfg_file = cfg_file)

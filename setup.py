@@ -15,7 +15,7 @@ requirements = [
 
 setup(
     name="pseuserver",
-    version="2.1.0",
+    version="2.6.0",
     packages=find_packages(),
 
     # development metadata
@@ -32,7 +32,7 @@ setup(
     keywords="web server json restful fake api",
     url="https://github.com/harryho/pseu-server",
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Intended Audience :: System Administrators",
         "License :: OSI Approved :: MIT License",

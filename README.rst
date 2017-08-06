@@ -15,10 +15,10 @@ Pseu-Sever is:
 - **Zero coding to setup Restful API** Pseu-Sever is designed to use without coding. You just need one config to setup all endpoints you need, then you can use it immediately. 
 
 
-User guide
-**********
+Quick Start
+***********
 
-- Create config.json
+- Create config.json as sample below (There is a sample in the repo as well)
 
 .. code-block:: json
 
@@ -42,18 +42,35 @@ User guide
 .. code-block:: bash
 
     $ python3 pseuserver
+     \(^_^)/ Hi
 
+    Loading config.json is done.
+
+    Resource :
+    /posts
+    /comments
+
+    Database: db.json
+
+    * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 
 - Test api via postman 
 
     It is the handy and easy way to play around with the API
+
+.. code-block:: bash
+
+    GET /posts       --> Get all posts
+    POST /posts      --> Add new post
+    PUT /posts/1     --> Update existing post which id is 1
+    DELETE /posts/1  --> Delete a post which id is 1
+    DELETE /posts    --> Delete all posts
 
 - Test api via curl 
 
 .. code-block:: bash
 
     # Add a new post
-
     $ curl -d "{\"text\":\"post 1\",\"author\":\"harry\"}" -H "Content-Type: application/json" -X POST http://localhost:5000/posts
     {"author": "harry", "text": "post 1", "id": 1}
 
@@ -73,18 +90,103 @@ User guide
     $ curl -X DELETE http://localhost:5000/posts 
 
 
+Advanced usage
+**************
+
+- Change default port
+
+.. code-block:: bash
+
+    $ python3 pseuserver -P 4999
+    ...
+    * Running on http://127.0.0.1:4999/ (Press CTRL+C to quit)
+
+- Add prefix to the API via config.json
+
+.. code-block:: json
+
+    {
+        "db":"db.json",
+        "prefix": "/api"
+        "routes":[
+            "/posts",
+            "/comments"
+        ]
+    }
+
+    #  API changes as follows
+    GET /api/posts       --> Get all posts
+    POST /api/posts      --> Add new post
+    PUT /api/posts/1     --> Update existing post which id is 1
+    DELETE /api/posts/1  --> Delete a post which id is 1
+    DELETE /api/posts    --> Delete all posts
+
+- Advanced queries
+
+.. code-block:: bash
+
+
+    # Create sample test data in db.json
+    {
+        "posts": [{
+            "author": "harry",
+            "text": "post 1",
+            "id": 1
+        }],
+        "comments": [{
+            "postId": 1,
+            "commentator": "john",
+            "text": "comment  1",
+            "id": 1
+        }]
+    }
+
+    # Use default embed to retrieve children objects
+    # It only supports one level depth
+    GET /posts/1/comments
+    {
+        "author": "harry",
+        "comments": [
+            {
+                "postId": 1,
+                "commentator": "john",
+                "text": "comment  1",
+                "id": 1
+            }
+        ],
+        "text": "post 1",
+        "id": 1
+    }
+
+
+    # Use expand to retrieve parent objects
+    GET /comments/1?expand=posts
+    {
+        "postId": 1,
+        "commentator": "john",
+        "post": {
+            "author": "harry",
+            "text": "post 1",
+            "id": 1
+        },
+        "text": "comment  1",
+        "id": 1
+    }
+
+    # Use query string to retrieve the objects
+    GET /posts?author=harry
+    {
+        "author": "harry",
+        "text": "post 1",
+        "id": 1
+    }
+
 Stable release
 **************
 
-- |Pseu-Server 2.1.0 - RC1|
+- |Pseu-Server 2.5.0|
 
-
-
-
-
-
-
-.. |Pseu-Server 2.1.0 - RC1| :target:: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=2.1.0
+.. |Pseu-Server 2.5.0| :target:: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=2.5.0
 
 .. |Build Status| image:: https://travis-ci.org/harryho/pseu-server.svg?branch=master
     :target: https://travis-ci.org/harryho/pseu-server
@@ -96,4 +198,4 @@ Stable release
 .. _Flask: http://flask.pocoo.org/
 .. _Eve: http://python-eve.org/
 .. _Json-Server: https://github.com/typicode/json-server
-.. _PseuServer: https://github.com/harryho/pseuserver
+.. _PseuServer: https://github.com/harryho/pseu-server

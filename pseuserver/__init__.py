@@ -12,19 +12,21 @@ Usage example:
 
 {
     "db": "db.json",
-    "prefix" : "",
     "routes":[
         "/posts",
         "/comments"
     ]
 }
 
+- Install the server
+
+$ pip install pseuserver
+
 - Launch the server
->>> python pseuserver
 
-- Test the restful API
+$ python pseuserver
 
-$ curl  
+
 
 """
 
@@ -37,31 +39,28 @@ import json
 # from json import dumps
 import sys
 import os
+import ntpath
 
 from functools import wraps, partial
 import re
 import operator
-from collections import Mapping
-# from urllib.parse import urlparse, urljoin
-
+# from collections import Mapping
 from pseuserver.settings import *
 
 
 
-class PseuServer(object):
+class PseuServer(object):    
+    """" PseuServer is the restful API for python developers """
 
     def __init__(self, app=None, prefix='' , cfg_file = ''):
 
         self.this_directory = os.path.dirname(os.path.realpath(__file__))
-
         self.urls = {}
         self.routes = []
         self.prefix = prefix or DEFAULT_API_PREFIX
         self.default_mediatype = DEFAULT_MEDIATYPE
         self.app = None
         self.config_file = cfg_file or DEFAULT_CONFIG
-        # self.config_file = os.path.join(os.getcwd(), cfg_file) \
-        #     if cfg_file else os.path.join(os.getcwd(), DEFAULT_CONFIG)
         self.db_file = None
         self.db = DEFAULT_DB
 
@@ -70,9 +69,23 @@ class PseuServer(object):
             self.load_routes()
             self.add_routes()
 
+            print('\n \(^_^)/ Hi \n')
+            print('Loading %s is done. \n' % ntpath.basename(self.config_file))
+
+            if len(self.urls) > 0:
+                print('Resource : ')
+
+            for url in self.urls:
+                print(' %s%s ' % ( self.prefix, url))
+
+            print('\nDatabase: %s \n' % self.db)
+
+
+
     def _complete_routes(self, url_part):
         """This method is used to defer the construction of the final url
-        :param url_part: The part of the url the endpoint is registered with
+        :param url_part: The part of the url is registered with prefix and route.
+        :param url_part: string
         """
         basic_routes = ['', '/', '/<int:id>', '/<int:id>/<string:embed>']
 
@@ -83,10 +96,6 @@ class PseuServer(object):
 
 
     def load_routes(self):
-
-        # self.this_directory = os.path.dirname(os.path.realpath(__file__))
-               
-
         if os.path.exists(self.config_file):
             self.this_directory = os.path.dirname(self.config_file)
         else:
@@ -113,6 +122,7 @@ class PseuServer(object):
         
     
     def add_routes(self, **kwargs):
+        """ Add routes to support HTTP methods: GET, POST, PUT, DELETE """
         rest_api = server_api(self.prefix, self.urls, self.db_file)
         for url in self.urls:
             rules = self._complete_routes(url)
@@ -129,12 +139,3 @@ class PseuServer(object):
                 elif r == 3: # e.g. /api/posts/1/comments -> GET
                     self.app.add_url_rule(rule, view_func=rest_api, methods=['GET'])
 
-# if __name__ == '__main__':
-#     app = Flask(__name__)
-#     restApi = PseuServer(app)
-#     app.run(debug=False)
-
-
-
-# __all__= ['PseuServer']
-# __all__ = ('PseuServer')
