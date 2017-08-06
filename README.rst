@@ -1,7 +1,7 @@
 Pseu-Server
 ----
 
-|Build Status|
+|Build Status| |Coverage| |Version|
 
 Pseu-Server is a **zero coding** restful API server inspired by Json-Server_ and Eve_. It is designed to be used as fake restful api for development, especially for people want to use Python stack. Setup process is **less than 1 minute*d*. 
 
