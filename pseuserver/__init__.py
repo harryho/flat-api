@@ -129,5 +129,12 @@ class PseuServer(object):
                 elif r == 3: # e.g. /api/posts/1/comments -> GET
                     self.app.add_url_rule(rule, view_func=rest_api, methods=['GET'])
 
+# if __name__ == '__main__':
+#     app = Flask(__name__)
+#     restApi = PseuServer(app)
+#     app.run(debug=False)
+
+
+
 # __all__= ['PseuServer']
 # __all__ = ('PseuServer')

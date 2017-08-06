@@ -8,10 +8,14 @@ def read(fname):
     path = os.path.join(os.path.dirname(__file__), fname)
     return open(path, encoding='utf-8').read()
 
+requirements = [
+    'Flask>=0.8',
+    'pseudb>=3.0.0'
+]
 
 setup(
     name="pseuserver",
-    version="1.0.0.RC1",
+    version="2.1.0",
     packages=find_packages(),
 
     # development metadata
@@ -25,7 +29,7 @@ setup(
                 " especially for people want to stick with Python stack. Setup process "
                 " is less than 1 minute. ",
     license="MIT",
-    keywords="database json nosql",
+    keywords="web server json restful fake api",
     url="https://github.com/harryho/pseu-server",
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -46,6 +50,6 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
         "Operating System :: OS Independent"
     ],
-
+    install_requires=requirements,
     long_description=read('README.rst'),
 )
