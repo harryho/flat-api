@@ -88,6 +88,11 @@ Stable release
 
 .. |Build Status| image:: https://travis-ci.org/harryho/pseu-server.svg?branch=master
     :target: https://travis-ci.org/harryho/pseu-server
+.. |Coverage| image:: https://coveralls.io/repos/github/harryho/pseu-server/badge.svg?branch=master
+    :target: https://coveralls.io/github/harryho/pseu-server?branch=master
+.. |Version| image:: http://img.shields.io/pypi/v/pseuserver.svg?style=flat-square
+    :target: https://pypi.python.org/pypi/pseuserver/
+
 .. _Flask: http://flask.pocoo.org/
 .. _Eve: http://python-eve.org/
 .. _Json-Server: https://github.com/typicode/json-server
