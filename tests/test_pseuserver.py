@@ -24,16 +24,18 @@ class TestApi(unittest.TestCase):
         assert len(server.routes) == 0
 
     def test_init_without_config(self):
-        with self.assertRaises(Exception) as context:
-            server = PseuServer(Mock(), prefix='', cfg_file='')
-            self.assertTrue('The config.json is not found.' in context.exception)
+        if sys.api_version > (2,6,):
+            with self.assertRaises(Exception) as context:
+                server = PseuServer(Mock(), prefix='', cfg_file='')
+                self.assertTrue('The config.json is not found.' in context.exception)
 
-    def test_init_empty_config(self):        
-        with self.assertRaises(Exception) as context:
-            self.this_dir = os.path.dirname(os.path.realpath(__file__))
-            self.cfg_file = os.path.join(self.this_dir, 'test.empty.config.json')
-            server = PseuServer(Mock(), prefix='', cfg_file=self.cfg_file)
-            self.assertTrue('The config.json is not found.' in context.exception)
+    def test_init_empty_config(self):
+        if sys.api_version > (2,6,):        
+            with self.assertRaises(Exception) as context:
+                self.this_dir = os.path.dirname(os.path.realpath(__file__))
+                self.cfg_file = os.path.join(self.this_dir, 'test.empty.config.json')
+                server = PseuServer(Mock(), prefix='', cfg_file=self.cfg_file)
+                self.assertTrue('The config.json is not found.' in context.exception)
 
     def test_init_simple_config(self):
         self.this_dir = os.path.dirname(os.path.realpath(__file__))
