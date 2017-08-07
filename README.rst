@@ -119,6 +119,7 @@ Advanced usage
 .. code-block:: bash
 
     GET /api/posts       --> Get all posts
+    GET /api/posts/1       --> Get the post which id is 1
     POST /api/posts      --> Add new post
     PUT /api/posts/1     --> Update existing post which id is 1
     DELETE /api/posts/1  --> Delete a post which id is 1
@@ -150,8 +151,9 @@ Advanced usage
 .. code-block:: bash
 
     GET /posts/1/comments
+    
 
-    - Following result is based on content of db.json above
+- Following result is based on content of db.json above
 
 .. code-block:: json
 
@@ -176,7 +178,9 @@ Advanced usage
 
     GET /comments/1?expand=posts
 
-    - Following result is based on content of db.json above
+
+- Following result is based on content of db.json above
+
 
 .. code-block:: json
           
@@ -198,7 +202,9 @@ Advanced usage
 
     GET /posts?author=harry
 
-    - Query result 
+
+- Query result 
+
 
 .. code-block:: json
     {
