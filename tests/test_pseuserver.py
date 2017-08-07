@@ -24,13 +24,13 @@ class TestApi(unittest.TestCase):
         assert len(server.routes) == 0
 
     def test_init_without_config(self):
-        if sys.version_info > (2,6,):
+        if sys.version_info > (2,7,):
             with self.assertRaises(Exception) as context:
                 server = PseuServer(Mock(), prefix='', cfg_file='')
                 self.assertTrue('The config.json is not found.' in context.exception)
 
     def test_init_empty_config(self):
-        if sys.version_info > (2,6,):        
+        if sys.version_info > (2,7,):        
             with self.assertRaises(Exception) as context:
                 self.this_dir = os.path.dirname(os.path.realpath(__file__))
                 self.cfg_file = os.path.join(self.this_dir, 'test.empty.config.json')
