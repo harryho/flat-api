@@ -12,15 +12,13 @@ from pseudb import *
 
 class TestApi(unittest.TestCase):
     def setUp(self):
-        pseuserver.DEFAULT_CONFIG = 'test.config.json'
-        pseuserver.DEFAULT_DB = 'test.db.json'
         this_dir = os.path.dirname(os.path.realpath(__file__))
+        cfg_file = os.path.join(this_dir, 'test.config.json')
 
-        cfg_file = os.path.join(this_dir, pseuserver.DEFAULT_CONFIG)
         app = Flask(__name__)
-        self.api = PseuServer(app, prefix ='', cfg_file = cfg_file)
-        self.db = PseuDB(os.path.join(this_dir, pseuserver.DEFAULT_DB))
-        self.app = app.test_client()
+        self.api = PseuServer(app, cfg_file = cfg_file)
+        self.db = PseuDB(self.api.db_file)
+        self.client = app.test_client()
 
     def tearDown(self):
         self.db.close()
@@ -30,7 +28,7 @@ class TestApi(unittest.TestCase):
 
 
     def test_get_empty_result(self):
-        response = self.app.get('/posts')
+        response = self.client.get('/posts')
 
         data = response.data
         sc = response.status_code
@@ -39,7 +37,7 @@ class TestApi(unittest.TestCase):
         self.assertEqual(json.loads(data.decode()), [])
 
     def test_get_404_error(self):
-        response = self.app.get('/not_exist')
+        response = self.client.get('/not_exist')
         data = response.data
         sc = response.status_code
         pp(response)
@@ -47,7 +45,7 @@ class TestApi(unittest.TestCase):
 
     def test_post(self):
         self.db.purge_tables()
-        response = self.app.post('/posts', 
+        response = self.client.post('/posts', 
             data='{\"text\": \"post 1\", \"author\": \"harry\" }')
 
         data = response.data
@@ -59,7 +57,7 @@ class TestApi(unittest.TestCase):
 
     def test_delete_all(self):
         self.db.purge_tables()
-        response = self.app.post('/posts', 
+        response = self.client.post('/posts', 
             data='{\"text\": \"post 1\", \"author\": \"harry\" }')
 
         data = response.data
@@ -68,13 +66,13 @@ class TestApi(unittest.TestCase):
         self.assertEqual(sc, 201)
         assert len(json.loads(data.decode()))> 1
 
-        response = self.app.delete('/posts')
+        response = self.client.delete('/posts')
 
         self.assertEqual(response.status_code, 200)
 
     def test_delete_by_id(self):
         self.db.purge_tables()
-        response = self.app.post('/posts', 
+        response = self.client.post('/posts', 
             data='{\"text\": \"post 1\", \"author\": \"harry\" }')
 
 
@@ -84,15 +82,15 @@ class TestApi(unittest.TestCase):
         self.assertEqual(sc, 201)
         assert len(json.loads(data.decode()))> 1  
 
-        response=self.app.delete('/posts/1')
+        response=self.client.delete('/posts/1')
         self.assertEqual(response.status_code, 200)
 
     def test_put(self):
         self.db.purge_tables()
-        self.app.post('/posts',
+        self.client.post('/posts',
             data='{\"text\": \"post 1\", \"author\": \"harry\" }')
 
-        response = self.app.put('/posts/1',
+        response = self.client.put('/posts/1',
             data='{\"text\": \"post updated\", \"author\": \"john\" }')
         data =json.loads(response.data.decode())
         sc = response.status_code
@@ -103,10 +101,10 @@ class TestApi(unittest.TestCase):
 
     def test_get_by_id(self):
         self.db.purge_tables()
-        self.app.post('/posts',
+        self.client.post('/posts',
             data='{\"text\": \"post 1\", \"author\": \"harry\" }')
 
-        response = self.app.get('/posts/1')
+        response = self.client.get('/posts/1')
 
         data = response.data
         sc = response.status_code
@@ -117,10 +115,10 @@ class TestApi(unittest.TestCase):
 
     def test_get_by_id(self):
         self.db.purge_tables()
-        self.app.post('/posts',
+        self.client.post('/posts',
             data='{\"text\": \"post 1\", \"author\": \"harry\" }')
 
-        response = self.app.get('/posts/1')
+        response = self.client.get('/posts/1')
 
         data = response.data
         sc = response.status_code
@@ -131,10 +129,10 @@ class TestApi(unittest.TestCase):
 
     def test_get_by_query(self):
         self.db.purge_tables()
-        self.app.post('/posts',
+        self.client.post('/posts',
             data='{\"text\": \"post 1\", \"author\": \"harry\" }')
 
-        response = self.app.get('/posts?author=harry')
+        response = self.client.get('/posts?author=harry')
 
         data =json.loads(response.data.decode()) 
         sc = response.status_code
@@ -146,12 +144,12 @@ class TestApi(unittest.TestCase):
 
     def test_get_by_id_with_embed(self):
         self.db.purge_tables()
-        self.app.post('/posts',
+        self.client.post('/posts',
             data='{\"text\": \"post 1\", \"author\": \"harry\" }')
-        self.app.post('/comments',
+        self.client.post('/comments',
             data='{\"text\": \"comment 1\", \"commentator\": \"peter\", "postId": 1 }')
 
-        response = self.app.get('/posts/1/comments')
+        response = self.client.get('/posts/1/comments')
 
         data =json.loads(response.data.decode()) 
         sc = response.status_code
@@ -168,12 +166,12 @@ class TestApi(unittest.TestCase):
 
     def test_get_by_id_with_expand(self):
         self.db.purge_tables()
-        self.app.post('/posts',
+        self.client.post('/posts',
             data='{\"text\": \"post 1\", \"author\": \"harry\" }')
-        self.app.post('/comments',
+        self.client.post('/comments',
             data='{\"text\": \"comment 1\", \"commentator\": \"peter\", "postId": 1 }')
 
-        response = self.app.get('/comments/1?expand=posts')
+        response = self.client.get('/comments/1?expand=posts')
 
         data =json.loads(response.data.decode()) 
         sc = response.status_code

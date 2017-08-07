@@ -52,7 +52,7 @@ from pseuserver.settings import *
 class PseuServer(object):    
     """" PseuServer is the restful API for python developers """
 
-    def __init__(self, app=None, prefix='' , cfg_file = ''):
+    def __init__(self, app=None, cfg_file = '', prefix='' ):
 
         self.this_directory = os.path.dirname(os.path.realpath(__file__))
         self.urls = {}
@@ -66,7 +66,7 @@ class PseuServer(object):
 
         if app is not None:
             self.app = app
-            self.load_routes()
+            self.load_config()
             self.add_routes()
 
             print('\n \(^_^)/ Hi \n')
@@ -95,7 +95,7 @@ class PseuServer(object):
         return basic_routes 
 
 
-    def load_routes(self):
+    def load_config(self):
         if os.path.exists(self.config_file):
             self.this_directory = os.path.dirname(self.config_file)
         else:

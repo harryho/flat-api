@@ -15,7 +15,7 @@ requirements = [
 
 setup(
     name="pseuserver",
-    version="2.6.0",
+    version="3.0.0",
     packages=find_packages(),
 
     # development metadata

@@ -41,7 +41,7 @@ class TestResource(unittest.TestCase):
         self.assertEqual( result ,
             {'id':1, 'text': 'post 1', 'author': 'harry'})
 
-    def test_put(self):
+    def test_edit(self):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
@@ -64,7 +64,7 @@ class TestResource(unittest.TestCase):
         self.assertEqual( result[0] ,
             {'id':1, 'text': 'post updated', 'author': 'john'})
 
-    def test_delete_all(self):
+    def test_remove_all(self):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
@@ -81,7 +81,7 @@ class TestResource(unittest.TestCase):
         assert len(self.db.table('posts').all()) == 0
         # self.assertEqual( result[0] , [1, 2])
 
-    def test_delete_by_id(self):
+    def test_remove_by_id(self):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file

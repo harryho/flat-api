@@ -30,29 +30,29 @@ _default.default = JSONEncoder().default  # Save unmodified default.
 JSONEncoder.default = _default # replacement
 
 
-def http_status_message(code):
-    """Maps an HTTP status code to the textual status"""
-    return HTTP_STATUS_CODES.get(code, '')
+# def http_status_message(code):
+#     """Maps an HTTP status code to the textual status"""
+#     return HTTP_STATUS_CODES.get(code, '')
 
 
-def unpack(value):
-    """Return a three tuple of data, code, and headers"""
-    if not isinstance(value, tuple):
-        return value, 200, {}
+# def unpack(value):
+#     """Return a three tuple of data, code, and headers"""
+#     if not isinstance(value, tuple):
+#         return value, 200, {}
 
-    try:
-        data, code, headers = value
-        return data, code, headers
-    except ValueError:
-        pass
+#     try:
+#         data, code, headers = value
+#         return data, code, headers
+#     except ValueError:
+#         pass
 
-    try:
-        data, code = value
-        return data, code, {}
-    except ValueError:
-        pass
+#     try:
+#         data, code = value
+#         return data, code, {}
+#     except ValueError:
+#         pass
 
-    return value, 200, {}
+#     return value, 200, {}
 
 
 def output_json(data, code, headers=None):
@@ -81,25 +81,25 @@ def get(**kwargs):
     try:
         return output_json(query(**kwargs), 200)
     except Exception  as e:
-        return 
+        return output_json(e, 404)
 
 def delete(**kwargs):
     try:
         return output_json(remove(**kwargs), 200)
     except Exception  as e:
-        return output_json(e, 404)
+        return output_json(e, 405)
 
 def put(**kwargs):
     try:
         return output_json(edit(**kwargs), 200)
     except Exception  as e:
-        return output_json(e, 404)       
+        return output_json(e, 405)       
 
 def post(**kwargs):
     try:
         return output_json(create(**kwargs), 201)
     except Exception  as e:
-        return output_json(e, 404)   
+        return output_json(e, 405)   
 
 def server_api(prefix, urls, db):
     """Return function restapi as universal endpoint to process most
