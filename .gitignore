@@ -39,3 +39,10 @@ nosetests.xml
 .idea
 
 *.db.yml
+
+**/launch.json
+
+
+**/db.json
+**/config.json
+

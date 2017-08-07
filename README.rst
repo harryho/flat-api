@@ -219,7 +219,7 @@ Stable release
 
 - |Pseu-Server 3.0.0|
 
-.. |Pseu-Server 3.0.0| :target:: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=2.5.0
+.. |Pseu-Server 3.0.0| :target: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=3.0.0
 
 .. |Build Status| image:: https://travis-ci.org/harryho/pseu-server.svg?branch=master
     :target: https://travis-ci.org/harryho/pseu-server
