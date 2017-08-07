@@ -93,7 +93,7 @@ Quick Start
 Advanced usage
 **************
 
-- Change default port
+- **Change default port**
 
 .. code-block:: bash
 
@@ -101,7 +101,7 @@ Advanced usage
     ...
     * Running on http://127.0.0.1:4999/ (Press CTRL+C to quit)
 
-- Add prefix to the API via config.json
+- **Add prefix to the API via config.json**
 
 .. code-block:: json
 
@@ -114,19 +114,23 @@ Advanced usage
         ]
     }
 
-    #  API changes as follows
+- API changes as follows
+
+.. code-block:: bash
+
     GET /api/posts       --> Get all posts
     POST /api/posts      --> Add new post
     PUT /api/posts/1     --> Update existing post which id is 1
     DELETE /api/posts/1  --> Delete a post which id is 1
     DELETE /api/posts    --> Delete all posts
 
-- Advanced queries
-
-.. code-block:: bash
+- **Advanced queries**
 
 
-    # Create sample test data in db.json
+- Create sample test data in db.json
+
+.. code-block:: json
+
     {
         "posts": [{
             "author": "harry",
@@ -141,9 +145,16 @@ Advanced usage
         }]
     }
 
-    # Use default embed to retrieve children objects
-    # It only supports one level depth
+- Use built-in embed route setting to retrieve children objects. It is inspired by Json-Server.
+
+.. code-block:: bash
+
     GET /posts/1/comments
+
+    - Following result is based on content of db.json above
+
+.. code-block:: json
+
     {
         "author": "harry",
         "comments": [
@@ -159,8 +170,16 @@ Advanced usage
     }
 
 
-    # Use expand to retrieve parent objects
+-  Use expand to retrieve parent objects
+
+.. code-block:: bash
+
     GET /comments/1?expand=posts
+
+    - Following result is based on content of db.json above
+
+.. code-block:: json
+          
     {
         "postId": 1,
         "commentator": "john",
@@ -173,8 +192,15 @@ Advanced usage
         "id": 1
     }
 
-    # Use query string to retrieve the objects
+- Use query string to retrieve the objects
+
+.. code-block:: bash
+
     GET /posts?author=harry
+
+    - Query result 
+
+.. code-block:: json
     {
         "author": "harry",
         "text": "post 1",
