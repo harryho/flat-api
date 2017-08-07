@@ -56,7 +56,7 @@ Quick Start
 
 - Test api via postman 
 
-    It is the handy and easy way to play around with the API
+    It would be a much more handy and easy way to play around with the API immediately.
 
 .. code-block:: bash
 
@@ -119,7 +119,7 @@ Advanced usage
 .. code-block:: bash
 
     GET /api/posts       --> Get all posts
-    GET /api/posts/1       --> Get the post which id is 1
+    GET /api/posts/1     --> Get the post which id is 1
     POST /api/posts      --> Add new post
     PUT /api/posts/1     --> Update existing post which id is 1
     DELETE /api/posts/1  --> Delete a post which id is 1
@@ -151,9 +151,9 @@ Advanced usage
 .. code-block:: bash
 
     GET /posts/1/comments
-    
 
-- Following result is based on content of db.json above
+
+- Following is query result
 
 .. code-block:: json
 
@@ -179,7 +179,7 @@ Advanced usage
     GET /comments/1?expand=posts
 
 
-- Following result is based on content of db.json above
+- Following is query result
 
 
 .. code-block:: json
@@ -203,10 +203,11 @@ Advanced usage
     GET /posts?author=harry
 
 
-- Query result 
+- Following is query result 
 
 
 .. code-block:: json
+
     {
         "author": "harry",
         "text": "post 1",
@@ -216,9 +217,9 @@ Advanced usage
 Stable release
 **************
 
-- |Pseu-Server 2.5.0|
+- |Pseu-Server 3.0.0|
 
-.. |Pseu-Server 2.5.0| :target:: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=2.5.0
+.. |Pseu-Server 3.0.0| :target:: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=2.5.0
 
 .. |Build Status| image:: https://travis-ci.org/harryho/pseu-server.svg?branch=master
     :target: https://travis-ci.org/harryho/pseu-server

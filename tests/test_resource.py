@@ -7,7 +7,7 @@ import json
 from pprint import pprint as pp
 import os
 from pseudb import *
-# from pseudb.storages import JSONStorage, MemoryStorage
+
 
 
 class TestResource(unittest.TestCase):

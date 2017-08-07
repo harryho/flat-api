@@ -108,5 +108,12 @@ class TestApi(unittest.TestCase):
             '/api/comments/<int:id>', '/api/comments/<int:id>/<string:embed>'] 
 
 
+    def testcomplete_routes(self):        
+        server = PseuServer()
+        routes = server.complete_routes('/test_url')
+
+        assert routes ==  ['/test_url', '/test_url/', '/test_url/<int:id>', 
+            '/test_url/<int:id>/<string:embed>'] 
+
 if __name__ == "__main__":
     unittest.main()

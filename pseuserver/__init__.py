@@ -82,7 +82,7 @@ class PseuServer(object):
 
 
 
-    def _complete_routes(self, url_part):
+    def complete_routes(self, url_part):
         """This method is used to defer the construction of the final url
         :param url_part: The part of the url is registered with prefix and route.
         :param url_part: string
@@ -125,7 +125,7 @@ class PseuServer(object):
         """ Add routes to support HTTP methods: GET, POST, PUT, DELETE """
         rest_api = server_api(self.prefix, self.urls, self.db_file)
         for url in self.urls:
-            rules = self._complete_routes(url)
+            rules = self.complete_routes(url)
             # pp(rules)
             for r in range(len(rules)):
                 rule = rules[r]
