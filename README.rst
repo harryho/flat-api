@@ -3,7 +3,7 @@ Pseu-Server
 
 |Build Status| |Coverage| |Version|
 
-Pseu-Server is a **zero coding** restful API server inspired by Json-Server_ and Eve_. It is designed to be used as fake restful api for development, especially for people want to use Python stack. Setup process is **less than 1 minute*d*. 
+Pseu-Server is a **zero coding** restful API server inspired by Json-Server_ and Eve_. It is designed to be used as fake restful api for development, especially for people want to use Python stack. Setup process is **less than 1 minute**. 
 
 
 Pseu-Sever is:
@@ -107,7 +107,7 @@ Advanced usage
 
     {
         "db":"db.json",
-        "prefix": "/api"
+        "prefix": "/api",
         "routes":[
             "/posts",
             "/comments"
@@ -225,10 +225,10 @@ Stable release
     :target: https://travis-ci.org/harryho/pseu-server
 .. |Coverage| image:: https://coveralls.io/repos/github/harryho/pseu-server/badge.svg?branch=master
     :target: https://coveralls.io/github/harryho/pseu-server?branch=master
-.. |Version| image:: http://img.shields.io/pypi/v/pseuserver.svg?style=flat-square
-    :target: https://pypi.python.org/pypi/pseuserver/
+.. |Version| image:: https://badge.fury.io/py/pseuserver.svg
+    :target: https://badge.fury.io/py/pseuserver
 
 .. _Flask: http://flask.pocoo.org/
 .. _Eve: http://python-eve.org/
 .. _Json-Server: https://github.com/typicode/json-server
-.. _PseuServer: https://github.com/harryho/pseu-server
+.. _PseuDB: https://github.com/harryho/pseudb
