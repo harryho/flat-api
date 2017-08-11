@@ -192,5 +192,97 @@ class TestResource(unittest.TestCase):
                'post': {'id':1, 'text': 'post 1', 'author': 'harry'}
              })
 
+
+    def test_query_with_like(self):
+        self.db.purge_tables()
+        kwargs = {}
+        kwargs[CONFIG_DB] = self.db_file
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
+
+        result = create(**kwargs)
+
+        kwargs[RESOURCE_QUERY] = {}
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_QUERY]['text_like'] = 'post'
+
+        result = query(**kwargs)
+
+        self.assertEqual( result[0] ,
+            {'text': 'post 1', 'id': 1, 'author': 'harry'})
+
+    def test_query_with_greater_than(self):
+        self.db.purge_tables()
+        kwargs = {}
+        kwargs[CONFIG_DB] = self.db_file
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\", \"like\":8 }'
+
+        result = create(**kwargs)
+
+        kwargs[RESOURCE_QUERY] = {}
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_QUERY]['like_gt'] = 3
+
+        result = query(**kwargs)
+
+        self.assertEqual( result[0] ,
+            {'text': 'post 1', 'id': 1, 'author': 'harry', "like":8})
+
+
+    def test_query_with_greater_than_and_equal(self):
+        self.db.purge_tables()
+        kwargs = {}
+        kwargs[CONFIG_DB] = self.db_file
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\", \"like\":8 }'
+
+        result = create(**kwargs)
+
+        kwargs[RESOURCE_QUERY] = {}
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_QUERY]['like_gte'] = 8
+
+        result = query(**kwargs)
+
+        self.assertEqual( result[0] ,
+            {'text': 'post 1', 'id': 1, 'author': 'harry', "like":8})
+
+    def test_query_with_less_than_and_equal(self):
+        self.db.purge_tables()
+        kwargs = {}
+        kwargs[CONFIG_DB] = self.db_file
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\", \"like\":8 }'
+
+        result = create(**kwargs)
+
+        kwargs[RESOURCE_QUERY] = {}
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_QUERY]['like_lte'] = 8
+
+        result = query(**kwargs)
+
+        self.assertEqual( result[0] ,
+            {'text': 'post 1', 'id': 1, 'author': 'harry', "like":8})
+
+    def test_query_with_less_than(self):
+        self.db.purge_tables()
+        kwargs = {}
+        kwargs[CONFIG_DB] = self.db_file
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\", \"like\":8 }'
+
+        result = create(**kwargs)
+
+        kwargs[RESOURCE_QUERY] = {}
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_QUERY]['like_lt'] = 80
+
+        result = query(**kwargs)
+
+        self.assertEqual( result[0] ,
+            {'text': 'post 1', 'id': 1, 'author': 'harry', "like":8})
+
 if __name__ == "__main__":
     unittest.main()            

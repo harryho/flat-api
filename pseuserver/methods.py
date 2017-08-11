@@ -73,6 +73,7 @@ def output_json(data, code, headers=None):
     
     resp = make_response(dumped, code)
     # resp.headers.extend(headers or {'Content-Type':'application/json'})
+    # Always return as JSON 
     resp.headers['Content-Type'] = 'application/json'
     return resp
 
@@ -126,9 +127,10 @@ def server_api(prefix, urls, db):
             arg_dict[RESOURCE_QUERY] = kwargs
 
         qs = dict(parse_qsl(req.query_string.decode("utf-8")))
-        # pp(qs)
+
         if RESOURCE_QUERY not in arg_dict:
             arg_dict[RESOURCE_QUERY]={}
+            
         arg_dict[RESOURCE_QUERY].update(qs)
         arg_dict[RESOURCE_DB] = _db
 

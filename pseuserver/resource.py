@@ -7,14 +7,36 @@ from pprint import pprint as pp
 def extract_query(**kwqry):
     _query = None
 
-    # print('extract_query')
     for key in kwqry:
         if key != RESOURCE_ID and key != RESOURCE_EMBED and key != RESOURCE_EXPAND:
             value = kwqry[key]
-            _query = (_query) & (where(key) == value) if _query is not None else where(key) == value
-    
+
+            if key.endswith(RESOURCE_QUERY_LIKE):                
+                key = key[0:len(RESOURCE_QUERY_LIKE)*-1]
+                _query = (_query) & (where(key).search(value)) if _query is not None else where(key).search(value)
+            
+            elif key.endswith(RESOURCE_QUERY_GREATER_THAN):                
+                key = key[0:len(RESOURCE_QUERY_GREATER_THAN)*-1]
+                _query = (_query) & (where(key) > value ) if _query is not None else where(key) > value
+            
+            elif key.endswith(RESOURCE_QUERY_LESS_THAN):                
+                key = key[0:len(RESOURCE_QUERY_LESS_THAN)*-1]
+                _query = (_query) & (where(key) < value ) if _query is not None else where(key) < value
+            
+            elif key.endswith(RESOURCE_QUERY_GREATER_THAN_AND_EQUAL):                
+                key = key[0:len(RESOURCE_QUERY_GREATER_THAN_AND_EQUAL)*-1]
+                _query = (_query) & (where(key) >= value ) if _query is not None else where(key) >= value
+            
+            elif key.endswith(RESOURCE_QUERY_LESS_THAN_AND_EQUAL):                
+                key = key[0:len(RESOURCE_QUERY_LESS_THAN_AND_EQUAL)*-1]
+                _query = (_query) & (where(key) <= value ) if _query is not None else where(key) <= value
+
+            else: 
+                _query = (_query) & (where(key) == value) if _query is not None else where(key) == value    
     
     return _query
+
+    
 
 def query(**kwargs):
     _dbf = kwargs[CONFIG_DB] or DEFAULT_DB
@@ -34,7 +56,7 @@ def query(**kwargs):
     with PseuDB( _dbf, storage=JSONStorage) as db:
         tb =  db.table(_tb)
         if _id:
-            obj = tb.get(oid = _id)
+            obj = tb.get(id = _id)
 
             if _embed and obj: 
                 embed = db.table(_embed)
@@ -49,10 +71,9 @@ def query(**kwargs):
                     expand_id = obj[expand_id_field]
                     expand = db.table(_expand)
                     expand_field = _expand[:-1] 
-                    expand_elem = expand.get(oid = _id)
+                    expand_elem = expand.get(id = _id)
 
                     obj[expand_field] = expand_elem
-            # pp(obj)
 
         elif _query:
             obj = tb.search(_query)
@@ -80,7 +101,7 @@ def remove(**kwargs):
     with PseuDB( _dbf, storage=JSONStorage) as db:
         tb =  db.table(_tb)
         if _id:
-            rst = tb.remove(oids = [_id])
+            rst = tb.remove(ids = [_id])
         else:
             rst = tb.purge()            
         return rst
@@ -93,5 +114,5 @@ def edit(**kwargs):
     
     with PseuDB( _dbf, storage=JSONStorage) as db:
         tb =  db.table(_tb)
-        ids, objs = tb.update(loads(_data.decode()), oids = [_id])
+        ids, objs = tb.update(loads(_data.decode()), ids = [_id])
         return objs
