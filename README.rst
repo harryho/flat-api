@@ -136,7 +136,8 @@ Advanced usage
         "posts": [{
             "author": "harry",
             "text": "post 1",
-            "id": 1
+            "id": 1,
+            "recommended": 4
         }],
         "comments": [{
             "postId": 1,
@@ -168,7 +169,8 @@ Advanced usage
             }
         ],
         "text": "post 1",
-        "id": 1
+        "id": 1,
+        "recommended": 4
     }
 
 
@@ -193,7 +195,8 @@ Advanced usage
             "id": 1
         },
         "text": "comment  1",
-        "id": 1
+        "id": 1,
+        "recommended": 4
     }
 
 - Use query string to retrieve the objects
@@ -211,15 +214,64 @@ Advanced usage
     {
         "author": "harry",
         "text": "post 1",
-        "id": 1
+        "id": 1,
+        "recommended": 4
     }
 
-Stable release
+- Use `_like` to retrieve the objects
+
+.. code-block:: bash
+
+    GET /posts?text_like=4
+
+
+- Following is query result 
+
+
+.. code-block:: json
+
+    {
+        "author": "harry",
+        "text": "post 1",
+        "id": 1,
+        "recommended": 4
+    }
+
+- Use `_gte`, `_gt`, `_lt`, `_lte` to retrieve the objects
+
+.. code-block:: bash
+
+    GET /posts?recommended_gte=4
+
+
+- Following is query result 
+
+
+.. code-block:: json
+
+    {
+        "author": "harry",
+        "text": "post 1",
+        "id": 1,
+        "recommended": 4
+    }
+
+
+recommended
+
+Stable Release
+**************
+
+- |Pseu-Server 3.1.1|
+
+Old Version
 **************
 
 - |Pseu-Server 3.0.0|
 
+
 .. |Pseu-Server 3.0.0| :target: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=3.0.0
+.. |Pseu-Server 3.1.1| :target: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=3.1.1
 
 .. |Build Status| image:: https://travis-ci.org/harryho/pseu-server.svg?branch=master
     :target: https://travis-ci.org/harryho/pseu-server

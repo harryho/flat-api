@@ -1,4 +1,6 @@
 """
+Pseu-Server (version: 3.1.1)
+
 PseuServer is a zero-coding, restful fake api web server for developers.
 
 PseuServer provides most common GET, POST, PUT, DELETE methods with a configurable

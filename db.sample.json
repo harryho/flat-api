@@ -8,7 +8,8 @@
     "posts": [{
         "text": "post 1",
         "author": "harry",
-        "id": 1
+        "id": 1,
+        "recommended": 4
     }, {
         "text": "post  2",
         "author": "john",
