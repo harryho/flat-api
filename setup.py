@@ -30,7 +30,7 @@ setup(
                 " is less than 1 minute. ",
     license="MIT",
     keywords="web server json restful fake api",
-    url="https://github.com/harryho/pseu-server",
+    url="https://github.com/harryho/flat-api",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
