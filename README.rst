@@ -10,7 +10,7 @@ FlatApi is:
 
 - **Flask based web server** FlatApi is built on the top of _Flask
 
-- **Json flat file database** FlatApi uses PseuDB_ to manage the Json flat file database. FlatApi is a document oriented database. 
+- **Json flat file database** FlatApi uses FlatApi_ to manage the Json flat file database. FlatApi is a document oriented database. 
 
 - **Zero coding to setup Restful API** FlatApi is designed to use without coding. You just need one config to setup all endpoints you need, then you can use it immediately. 
 
@@ -273,14 +273,15 @@ Old Version
 .. |FlatApi 3.0.0| :target: https://pypi.python.org/pypi?:action=display&name=flatapi&version=3.0.0
 .. |FlatApi 3.1.1| :target: https://pypi.python.org/pypi?:action=display&name=flatapi&version=3.1.1
 
-.. |Build Status| image:: https://travis-ci.org/harryho/pseu-server.svg?branch=master
-    :target: https://travis-ci.org/harryho/pseu-server
-.. |Coverage| image:: https://coveralls.io/repos/github/harryho/pseu-server/badge.svg?branch=master
-    :target: https://coveralls.io/github/harryho/pseu-server?branch=master
+.. |Build Status| image:: https://travis-ci.org/harryho/flat-api.svg?branch=master
+    :target: https://travis-ci.org/harryho/flat-api
+.. |Coverage| image:: https://coveralls.io/repos/github/harryho/flat-api/badge.svg?branch=master
+    :target: https://coveralls.io/github/harryho/flat-api?branch=master
+
 .. |Version| image:: https://badge.fury.io/py/flatapi.svg
     :target: https://badge.fury.io/py/flatapi
 
 .. _Flask: http://flask.pocoo.org/
 .. _Eve: http://python-eve.org/
 .. _Json-Server: https://github.com/typicode/json-server
-.. _PseuDB: https://github.com/harryho/flata
+.. _FlatApi: https://github.com/harryho/flata

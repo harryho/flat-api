@@ -1,5 +1,5 @@
 """
-FlatApi (version: 3.1.1)
+FlatApi (version: 3.1.3)
 
 FlatApi is a zero-coding, restful fake api web server for developers.
 
