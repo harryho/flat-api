@@ -1,18 +1,18 @@
-Pseu-Server
+FlatApi
 ----
 
 |Build Status| |Coverage| |Version|
 
-Pseu-Server is a **zero coding** restful API server inspired by Json-Server_ and Eve_. It is designed to be used as fake restful api for development, especially for people want to use Python stack. Setup process is **less than 1 minute**. 
+FlatApi is a **zero coding** restful API server inspired by Json-Server_ and Eve_. It is designed to be used as fake restful api for development, especially for people want to use Python stack. Setup process is **less than 1 minute**. 
 
 
-Pseu-Sever is:
+FlatApi is:
 
-- **Flask based web server** Pseu-Server is built on the top of _Flask
+- **Flask based web server** FlatApi is built on the top of _Flask
 
-- **Json flat file database** Pseu-Server uses PseuDB_ to manage the Json flat file database. PseuServer is a document oriented database. 
+- **Json flat file database** FlatApi uses PseuDB_ to manage the Json flat file database. FlatApi is a document oriented database. 
 
-- **Zero coding to setup Restful API** Pseu-Sever is designed to use without coding. You just need one config to setup all endpoints you need, then you can use it immediately. 
+- **Zero coding to setup Restful API** FlatApi is designed to use without coding. You just need one config to setup all endpoints you need, then you can use it immediately. 
 
 
 Quick Start
@@ -30,18 +30,18 @@ Quick Start
         ]
     }
 
-- Install Pseu-Server
+- Install FlatApi
 
 .. code-block:: bash
 
-    $ pip install pseuserver
+    $ pip install flatapi
 
 
-- Launch Pseu-Server. Please make sure the config.json is under current diretory
+- Launch FlatApi. Please make sure the config.json is under current diretory
 
 .. code-block:: bash
 
-    $ python3 pseuserver
+    $ python3 flatapi
      \(^_^)/ Hi
 
     Loading config.json is done.
@@ -97,7 +97,7 @@ Advanced usage
 
 .. code-block:: bash
 
-    $ python3 pseuserver -P 4999
+    $ python3 flatapi -P 4999
     ...
     * Running on http://127.0.0.1:4999/ (Press CTRL+C to quit)
 
@@ -262,25 +262,25 @@ recommended
 Stable Release
 **************
 
-- |Pseu-Server 3.1.1|
+- |FlatApi 3.1.1|
 
 Old Version
 **************
 
-- |Pseu-Server 3.0.0|
+- |FlatApi 3.0.0|
 
 
-.. |Pseu-Server 3.0.0| :target: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=3.0.0
-.. |Pseu-Server 3.1.1| :target: https://pypi.python.org/pypi?:action=display&name=pseuserver&version=3.1.1
+.. |FlatApi 3.0.0| :target: https://pypi.python.org/pypi?:action=display&name=flatapi&version=3.0.0
+.. |FlatApi 3.1.1| :target: https://pypi.python.org/pypi?:action=display&name=flatapi&version=3.1.1
 
 .. |Build Status| image:: https://travis-ci.org/harryho/pseu-server.svg?branch=master
     :target: https://travis-ci.org/harryho/pseu-server
 .. |Coverage| image:: https://coveralls.io/repos/github/harryho/pseu-server/badge.svg?branch=master
     :target: https://coveralls.io/github/harryho/pseu-server?branch=master
-.. |Version| image:: https://badge.fury.io/py/pseuserver.svg
-    :target: https://badge.fury.io/py/pseuserver
+.. |Version| image:: https://badge.fury.io/py/flatapi.svg
+    :target: https://badge.fury.io/py/flatapi
 
 .. _Flask: http://flask.pocoo.org/
 .. _Eve: http://python-eve.org/
 .. _Json-Server: https://github.com/typicode/json-server
-.. _PseuDB: https://github.com/harryho/pseudb
+.. _PseuDB: https://github.com/harryho/flata

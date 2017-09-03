@@ -14,13 +14,13 @@ matrix:
     - python: nightly
 install:
   - pip install -U flask
-  - pip install -U pseudb
+  - pip install -U flata
   - pip install -U pytest
   - pip install coverage
   - pip install coveralls
   - pip install pytest-cov
 script:
-  py.test -v --cov pseuserver
+  py.test -v --cov flatapi
 after_success:
   coveralls  
 notifications:

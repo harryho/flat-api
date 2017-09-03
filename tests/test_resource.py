@@ -1,23 +1,23 @@
 import unittest
 from flask  import Flask
-from pseuserver import *
-import pseuserver
+from flatapi import *
+import flatapi
 import requests
 import json
 from pprint import pprint as pp
 import os
-from pseudb import *
+from flata import *
 
 
 
 class TestResource(unittest.TestCase):
     def setUp(self):
-        # pseuserver.DEFAULT_CONFIG = 'test.config.json'
+        # flatapi.DEFAULT_CONFIG = 'test.config.json'
         _db = 'test.db.json'
         this_dir = os.path.dirname(os.path.realpath(__file__))
         
         self.db_file = os.path.join(this_dir, _db)
-        self.db = PseuDB(self.db_file)
+        self.db = Flata(self.db_file)
 
 
 

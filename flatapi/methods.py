@@ -3,7 +3,7 @@ from pprint import pprint as pp
 from json import dumps
 from werkzeug.http import HTTP_STATUS_CODES
 import re
-from pseuserver.resource import *
+from flatapi.resource import *
 
 import sys
 

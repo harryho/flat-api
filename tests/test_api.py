@@ -1,12 +1,12 @@
 import unittest
 from flask  import Flask
-from pseuserver import *
-import pseuserver
+from flatapi import *
+import flatapi
 import requests
 import json
 from pprint import pprint as pp
 import os
-from pseudb import *
+from flata import *
 
 
 
@@ -16,8 +16,8 @@ class TestApi(unittest.TestCase):
         cfg_file = os.path.join(this_dir, 'test.config.json')
 
         app = Flask(__name__)
-        self.api = PseuServer(app, cfg_file = cfg_file)
-        self.db = PseuDB(self.api.db_file)
+        self.api = FlatApi(app, cfg_file = cfg_file)
+        self.db = Flata(self.api.db_file)
         self.client = app.test_client()
 
     def tearDown(self):

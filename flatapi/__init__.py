@@ -1,9 +1,9 @@
 """
-Pseu-Server (version: 3.1.1)
+FlatApi (version: 3.1.1)
 
-PseuServer is a zero-coding, restful fake api web server for developers.
+FlatApi is a zero-coding, restful fake api web server for developers.
 
-PseuServer provides most common GET, POST, PUT, DELETE methods with a configurable
+FlatApi provides most common GET, POST, PUT, DELETE methods with a configurable
 backend. It has support for handy querying as well.
 
 .. codeauthor:: Harry Ho <harry.ho_long@yahoo.com>
@@ -22,11 +22,11 @@ Usage example:
 
 - Install the server
 
-$ pip install pseuserver
+$ pip install flatapi
 
 - Launch the server
 
-$ python pseuserver
+$ python flatapi
 
 
 
@@ -36,7 +36,7 @@ from flask import Flask
 from flask import abort, request, make_response, current_app , Response
 
 from pprint import pprint as pp
-from pseuserver.methods import *
+from flatapi.methods import *
 import json
 # from json import dumps
 import sys
@@ -47,12 +47,12 @@ from functools import wraps, partial
 import re
 import operator
 # from collections import Mapping
-from pseuserver.settings import *
+from flatapi.settings import *
 
 
 
-class PseuServer(object):    
-    """" PseuServer is the restful API for python developers """
+class FlatApi(object):    
+    """" FlatApi is the restful API for python developers """
 
     def __init__(self, app=None, cfg_file = '', prefix='' ):
 

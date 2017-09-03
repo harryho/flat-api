@@ -1,7 +1,7 @@
 import unittest
 from flask  import Flask
-import pseuserver
-from pseuserver import *
+import flatapi
+from flatapi import *
 import requests
 import json
 from pprint import pprint as pp
@@ -18,7 +18,7 @@ class TestApi(unittest.TestCase):
         pass
 
     def test_default_init(self):
-        server = PseuServer()
+        server = FlatApi()
         assert server.app is None
         assert server.prefix is ''
         assert len(server.routes) == 0
@@ -27,7 +27,7 @@ class TestApi(unittest.TestCase):
                     reason="requires python2.7+")
     def test_init_without_config(self):
         with self.assertRaises(Exception) as context:
-            server = PseuServer(Mock())
+            server = FlatApi(Mock())
             self.assertTrue('The config.json is not found.' in context.exception)
 
     @pytest.mark.skipif(sys.version_info < (2, 7),
@@ -36,17 +36,17 @@ class TestApi(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             self.this_dir = os.path.dirname(os.path.realpath(__file__))
             self.cfg_file = os.path.join(self.this_dir, 'test.empty.config.json')
-            server = PseuServer(Mock(), cfg_file=self.cfg_file, prefix='')
+            server = FlatApi(Mock(), cfg_file=self.cfg_file, prefix='')
             self.assertTrue('The config.json is not found.' in context.exception)
 
     def test_init_simple_config(self):
         self.this_dir = os.path.dirname(os.path.realpath(__file__))
         self.cfg_file = os.path.join(self.this_dir, 'test.simple.config.json')
         
-        server = PseuServer(Flask(__name__), cfg_file = self.cfg_file)
+        server = FlatApi(Flask(__name__), cfg_file = self.cfg_file)
         assert server.app is not None
-        assert server.prefix == pseuserver.DEFAULT_API_PREFIX
-        assert server.db == pseuserver.DEFAULT_DB
+        assert server.prefix == flatapi.DEFAULT_API_PREFIX
+        assert server.db == flatapi.DEFAULT_DB
         assert len(server.urls) == 0
         assert len(server.routes) == 0 
 
@@ -54,7 +54,7 @@ class TestApi(unittest.TestCase):
         self.this_dir = os.path.dirname(os.path.realpath(__file__))
         self.cfg_file = os.path.join(self.this_dir, 'test.advanced.config.json')
 
-        server = PseuServer(Flask(__name__), cfg_file = self.cfg_file, prefix='/api')
+        server = FlatApi(Flask(__name__), cfg_file = self.cfg_file, prefix='/api')
         assert server.app is not None
         assert server.prefix == '/api'
         assert server.db == 'test.advanced.db.json'
@@ -70,10 +70,10 @@ class TestApi(unittest.TestCase):
         self.this_dir = os.path.dirname(os.path.realpath(__file__))
         self.cfg_file = os.path.join(self.this_dir, 'test.simple.config.json')
         
-        server = PseuServer(Flask(__name__), cfg_file = self.cfg_file)
+        server = FlatApi(Flask(__name__), cfg_file = self.cfg_file)
         assert server.app is not None
-        assert server.prefix == pseuserver.DEFAULT_API_PREFIX
-        assert server.db == pseuserver.DEFAULT_DB
+        assert server.prefix == flatapi.DEFAULT_API_PREFIX
+        assert server.db == flatapi.DEFAULT_DB
         assert len(server.urls) == 0
         assert len(server.routes) == 0 
 
@@ -90,7 +90,7 @@ class TestApi(unittest.TestCase):
         self.this_dir = os.path.dirname(os.path.realpath(__file__))
         self.cfg_file = os.path.join(self.this_dir, 'test.simple.config.json')
         
-        server = PseuServer(Flask(__name__), cfg_file = self.cfg_file)
+        server = FlatApi(Flask(__name__), cfg_file = self.cfg_file)
 
 
         server.config_file = os.path.join(self.this_dir, 'test.advanced.config.json')
@@ -109,7 +109,7 @@ class TestApi(unittest.TestCase):
 
 
     def testcomplete_routes(self):        
-        server = PseuServer()
+        server = FlatApi()
         routes = server.complete_routes('/test_url')
 
         assert routes ==  ['/test_url', '/test_url/', '/test_url/<int:id>', 
