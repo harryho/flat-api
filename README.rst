@@ -8,11 +8,13 @@ FlatApi is a **zero coding** restful API server inspired by Json-Server_ and Eve
 
 FlatApi is:
 
+- **Zero coding to setup Restful API** FlatApi is designed to use without coding. You just need one config to setup all endpoints you need, then you can use it immediately. 
+
 - **Flask based web server** FlatApi is built on the top of _Flask
 
 - **Json flat file database** FlatApi uses FlatApi_ to manage the Json flat file database. FlatApi is a document oriented database. 
 
-- **Zero coding to setup Restful API** FlatApi is designed to use without coding. You just need one config to setup all endpoints you need, then you can use it immediately. 
+- **Caching memory storage availble** FlatApi supports caching momery storage after version 4.0.0. 
 
 
 Quick Start
@@ -246,7 +248,6 @@ Advanced usage
 
 - Following is query result 
 
-
 .. code-block:: json
 
     {
@@ -256,20 +257,32 @@ Advanced usage
         "recommended": 4
     }
 
+- **Use caching momery storage**
 
-recommended
+- Use following config to launch the api with caching memory storage.  
+
+.. code-block:: json
+
+    {
+        "storage": "MEMORY",
+        "routes":[
+            "/posts",
+            "/comments"
+        ]
+    }   
+
 
 Stable Release
 **************
 
-- |FlatApi 3.1.1|
+- |FlatApi 4.0.0|
 
 Old Version
 **************
 
-- |FlatApi 3.0.0|
+- |FlatApi 3.1.1|
 
-
+.. |FlatApi 4.0.0| :target: https://pypi.python.org/pypi?:action=display&name=flatapi&version=4.0.0
 .. |FlatApi 3.0.0| :target: https://pypi.python.org/pypi?:action=display&name=flatapi&version=3.0.0
 .. |FlatApi 3.1.1| :target: https://pypi.python.org/pypi?:action=display&name=flatapi&version=3.1.1
 
