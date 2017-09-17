@@ -1,8 +1,9 @@
 from flata import Flata, where, Query
-from flata.storages import JSONStorage
+from flata.storages import JSONStorage, MemoryStorage
 from flatapi.settings import *
 from json import loads, dumps
-from pprint import pprint as pp
+# from pprint import pprint as pp
+from flata.middlewares import CachingMiddleware
 
 def extract_query(**kwqry):
     _query = None
@@ -39,8 +40,13 @@ def extract_query(**kwqry):
     
 
 def query(**kwargs):
+
     _dbf = kwargs[CONFIG_DB] or DEFAULT_DB
+    _storage = MemoryStorage if kwargs[CONFIG_STORAGE] == MEMORY_STORAGE else JSONStorage
+    _cache = kwargs.pop(CONFIG_CACHE, None) 
+
     _tb = kwargs[RESOURCE_DOCUMENT]
+       
 
     _id = kwargs[RESOURCE_QUERY].pop(RESOURCE_ID) \
         if RESOURCE_QUERY in kwargs and RESOURCE_ID in kwargs[RESOURCE_QUERY] else None
@@ -53,7 +59,7 @@ def query(**kwargs):
 
     _query = extract_query(**kwargs[RESOURCE_QUERY]) if RESOURCE_QUERY in kwargs else None
 
-    with Flata( _dbf, storage=JSONStorage) as db:
+    with Flata( _dbf, storage=_storage, cache = _cache) as db:
         tb =  db.table(_tb)
         if _id:
             obj = tb.get(id = _id)
@@ -84,21 +90,25 @@ def query(**kwargs):
 
 def create(**kwargs):
     _dbf = kwargs[CONFIG_DB] or DEFAULT_DB
+    _storage = MemoryStorage if kwargs[CONFIG_STORAGE] == MEMORY_STORAGE else JSONStorage
+    _cache = kwargs.pop(CONFIG_CACHE, None)
     _tb = kwargs[RESOURCE_DOCUMENT]
     _data = kwargs[RESOURCE_DATA]
-    with Flata( _dbf, storage=JSONStorage) as db:
+    with Flata( _dbf, storage=_storage, cache = _cache) as db:
         tb =  db.table(_tb)
         obj = tb.insert(loads(_data.decode()))
         return obj
 
 def remove(**kwargs):
     _dbf = kwargs[CONFIG_DB] or DEFAULT_DB
+    _storage = MemoryStorage if kwargs[CONFIG_STORAGE] == MEMORY_STORAGE else JSONStorage    
+    _cache = kwargs.pop(CONFIG_CACHE, None)
     _tb = kwargs[RESOURCE_DOCUMENT]
     _id = kwargs[RESOURCE_QUERY][RESOURCE_ID] \
         if RESOURCE_QUERY in kwargs and \
              RESOURCE_ID in kwargs[RESOURCE_QUERY] else None
 
-    with Flata( _dbf, storage=JSONStorage) as db:
+    with Flata( _dbf, storage=_storage, cache = _cache) as db:
         tb =  db.table(_tb)
         if _id:
             rst = tb.remove(ids = [_id])
@@ -108,11 +118,13 @@ def remove(**kwargs):
 
 def edit(**kwargs):
     _dbf = kwargs[CONFIG_DB] or DEFAULT_DB
+    _storage = MemoryStorage if kwargs[CONFIG_STORAGE] == MEMORY_STORAGE else JSONStorage    
+    _cache = kwargs.pop(CONFIG_CACHE, None)
     _tb = kwargs[RESOURCE_DOCUMENT]
     _data = kwargs[RESOURCE_DATA]
     _id = kwargs[RESOURCE_QUERY][RESOURCE_ID]
     
-    with Flata( _dbf, storage=JSONStorage) as db:
+    with Flata( _dbf, storage=_storage, cache = _cache) as db:
         tb =  db.table(_tb)
         ids, objs = tb.update(loads(_data.decode()), ids = [_id])
         return objs

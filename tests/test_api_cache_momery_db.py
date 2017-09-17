@@ -7,17 +7,18 @@ import json
 # from pprint import pprint as pp
 import os
 from flata import *
+from flata.middlewares import CachingMiddleware
 
 
 
-class TestApi(unittest.TestCase):
+class TestApiWithCacheMemoeryStorage(unittest.TestCase):
     def setUp(self):
         this_dir = os.path.dirname(os.path.realpath(__file__))
-        cfg_file = os.path.join(this_dir, 'test.config.json')
+        cfg_file = os.path.join(this_dir, 'test.memory.config.json')
 
         app = Flask(__name__)
         self.api = FlatApi(app, cfg_file = cfg_file)
-        self.db = Flata(self.api.db_file, storage = JSONStorage)
+        self.db = Flata(storage = self.api.cache)
         self.client = app.test_client()
 
     def tearDown(self):
@@ -113,19 +114,6 @@ class TestApi(unittest.TestCase):
         self.assertEqual(json.loads(data.decode()),
              {'id':1, 'text': 'post 1', 'author': 'harry'})
 
-    def test_get_by_id(self):
-        self.db.purge_tables()
-        self.client.post('/posts',
-            data='{\"text\": \"post 1\", \"author\": \"harry\" }')
-
-        response = self.client.get('/posts/1')
-
-        data = response.data
-        sc = response.status_code
-
-        self.assertEqual(sc, 200)
-        self.assertEqual(json.loads(data.decode()),
-             {'id':1, 'text': 'post 1', 'author': 'harry'})
 
     def test_get_by_query(self):
         self.db.purge_tables()

@@ -15,7 +15,7 @@ requirements = [
 
 setup(
     name="flatapi",
-    version="3.1.3",
+    version="4.0.0",
     packages=find_packages(),
 
     # development metadata

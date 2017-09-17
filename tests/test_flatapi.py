@@ -4,7 +4,7 @@ import flatapi
 from flatapi import *
 import requests
 import json
-from pprint import pprint as pp
+# from pprint import pprint as pp
 try:
     from mock import Mock
 except:
@@ -50,6 +50,18 @@ class TestApi(unittest.TestCase):
         assert len(server.urls) == 0
         assert len(server.routes) == 0 
 
+    def test_init_momery_config(self):
+        self.this_dir = os.path.dirname(os.path.realpath(__file__))
+        self.cfg_file = os.path.join(self.this_dir, 'test.memory.config.json')
+
+        server = FlatApi(Flask(__name__), cfg_file = self.cfg_file, prefix='')
+        assert server.app is not None
+        assert server.db == 'db.json'
+        assert server.storage == MEMORY_STORAGE
+        assert len(server.urls) == 2
+        assert len(server.routes) == 8
+        assert isinstance(server.cache, (CachingMiddleware, MemoryStorage))
+        
     def test_init_advanced_config(self):
         self.this_dir = os.path.dirname(os.path.realpath(__file__))
         self.cfg_file = os.path.join(self.this_dir, 'test.advanced.config.json')
@@ -108,7 +120,7 @@ class TestApi(unittest.TestCase):
             '/api/comments/<int:id>', '/api/comments/<int:id>/<string:embed>'] 
 
 
-    def testcomplete_routes(self):        
+    def test_complete_routes(self):        
         server = FlatApi()
         routes = server.complete_routes('/test_url')
 

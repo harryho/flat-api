@@ -65,6 +65,7 @@ class FlatApi(object):
         self.config_file = cfg_file or DEFAULT_CONFIG
         self.db_file = None
         self.db = DEFAULT_DB
+        self.cache = None
 
         if app is not None:
             self.app = app
@@ -79,8 +80,11 @@ class FlatApi(object):
 
             for url in self.urls:
                 print(' %s%s ' % ( self.prefix, url))
-
-            print('\nDatabase: %s \n' % self.db)
+            
+            if self.storage == FILE_STORAGE:
+                print('\nDatabase: %s \n' % self.db)
+            else:
+                print('\nDatabase: Memory  \n')
 
 
 
@@ -117,6 +121,8 @@ class FlatApi(object):
                     self.prefix = data[CONFIG_PREFIX] if CONFIG_PREFIX in data else self.prefix
                     self.db = data[CONFIG_DB] if CONFIG_DB in data else DEFAULT_DB
                     self.db_file = os.path.join(self.this_directory, self.db)
+                    self.storage = data[CONFIG_STORAGE] if CONFIG_STORAGE in data else FILE_STORAGE
+                    self.cache = CachingMiddleware(MemoryStorage)() if self.storage == MEMORY_STORAGE else None
                 except ValueError as e:
                     raise ValueError('The routes is missing in the %s file. '% self.config_file )
             else:
@@ -125,7 +131,7 @@ class FlatApi(object):
     
     def add_routes(self, **kwargs):
         """ Add routes to support HTTP methods: GET, POST, PUT, DELETE """
-        rest_api = server_api(self.prefix, self.urls, self.db_file)
+        rest_api = server_api(self.prefix, self.urls, self.db_file, self.storage, self.cache)
         for url in self.urls:
             rules = self.complete_routes(url)
             # pp(rules)

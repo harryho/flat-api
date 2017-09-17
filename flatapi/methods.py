@@ -102,7 +102,7 @@ def post(**kwargs):
     except Exception  as e:
         return output_json(e, 405)   
 
-def server_api(prefix, urls, db):
+def server_api(prefix, urls, db, storage, cache):
     """Return function restapi as universal endpoint to process most
     common HTTP methods: GET, POST, PUT, DELETE. 
     :param prefix: The prefix of each endpoint
@@ -111,12 +111,16 @@ def server_api(prefix, urls, db):
     :type urls: array of string 
     :param db: The json database file path
     :type db: string or bytes
+    :param storage: The storage option: FILE | MEMORY
+    :type storage: string or bytes
     """
 
     def restapi(**kwargs):
         _prefix = prefix
         _urls = urls
         _db = db
+        _storage = storage
+        _cache = cache
 
         response = None
         method = request.method
@@ -132,7 +136,9 @@ def server_api(prefix, urls, db):
             arg_dict[RESOURCE_QUERY]={}
             
         arg_dict[RESOURCE_QUERY].update(qs)
-        arg_dict[RESOURCE_DB] = _db
+        arg_dict[CONFIG_DB] = _db
+        arg_dict[CONFIG_STORAGE] = _storage
+        arg_dict[CONFIG_CACHE] = _cache
 
         path = req.path
 

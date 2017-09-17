@@ -1,0 +1,7 @@
+{
+    "storage": "MEMORY", 
+    "routes":[
+        "/posts",
+        "/comments"
+    ]
+}

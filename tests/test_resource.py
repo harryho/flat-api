@@ -18,7 +18,7 @@ class TestResource(unittest.TestCase):
         
         self.db_file = os.path.join(this_dir, _db)
         self.db = Flata(self.db_file)
-
+        
 
 
     def tearDown(self):
@@ -27,12 +27,24 @@ class TestResource(unittest.TestCase):
         if os.path.exists(self.db_file):
             os.remove(self.db_file)
 
-    
+    def test_memory_storage(self):
+        # self.db = Flata()
+        kwargs = {}
+        kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = MEMORY_STORAGE
+        kwargs[RESOURCE_DOCUMENT] = 'posts'
+        kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
+
+        result = create(**kwargs)
+
+        self.assertEqual( result ,
+            {'id':1, 'text': 'post 1', 'author': 'harry'})
 
     def test_create(self):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
 
@@ -45,6 +57,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
 
@@ -68,6 +81,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
 
@@ -85,6 +99,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
 
@@ -108,6 +123,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
 
@@ -126,6 +142,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
 
@@ -143,6 +160,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
 
@@ -171,6 +189,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
 
@@ -197,6 +216,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
 
@@ -215,6 +235,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\", \"like\":8 }'
 
@@ -234,6 +255,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\", \"like\":8 }'
 
@@ -252,6 +274,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\", \"like\":8 }'
 
@@ -270,6 +293,7 @@ class TestResource(unittest.TestCase):
         self.db.purge_tables()
         kwargs = {}
         kwargs[CONFIG_DB] = self.db_file
+        kwargs[CONFIG_STORAGE] = FILE_STORAGE
         kwargs[RESOURCE_DOCUMENT] = 'posts'
         kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\", \"like\":8 }'
 

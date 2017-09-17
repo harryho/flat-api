@@ -27,7 +27,7 @@ class TestMethods(unittest.TestCase):
             os.remove(self.api.db_file)
 
     def test_server_api(self):
-        endpoint = server_api('','', '' )
+        endpoint = server_api('','', '','', None )
 
         pp(endpoint.__name__)
         pp(type(endpoint))
@@ -35,7 +35,7 @@ class TestMethods(unittest.TestCase):
         assert callable(endpoint)
         assert endpoint.__name__ =='restapi'
 
-
+ 
     def test_output_json_status_code(self):
 
         with self.app.test_request_context('/'):
@@ -52,6 +52,7 @@ class TestMethods(unittest.TestCase):
         with self.app.test_request_context('/'):
             kwargs = {}
             kwargs[CONFIG_DB] = self.api.db_file
+            kwargs[CONFIG_STORAGE] = FILE_STORAGE
             kwargs[RESOURCE_DOCUMENT] = 'not_exists'
             pp(kwargs)
             rep = get(**kwargs)
@@ -64,6 +65,7 @@ class TestMethods(unittest.TestCase):
         with self.app.test_request_context('/'):
             kwargs = {}
             kwargs[CONFIG_DB] = self.api.db_file
+            kwargs[CONFIG_STORAGE] = FILE_STORAGE
             kwargs[RESOURCE_DOCUMENT] = 'posts'
             kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
             rep = post(**kwargs)
@@ -77,6 +79,7 @@ class TestMethods(unittest.TestCase):
         with self.app.test_request_context('/'):
             kwargs = {}
             kwargs[CONFIG_DB] = self.api.db_file
+            kwargs[CONFIG_STORAGE] = FILE_STORAGE
             kwargs[RESOURCE_DOCUMENT] = 'posts'
             kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
             rep = post(**kwargs)
@@ -98,6 +101,7 @@ class TestMethods(unittest.TestCase):
         with self.app.test_request_context('/'):
             kwargs = {}
             kwargs[CONFIG_DB] = self.api.db_file
+            kwargs[CONFIG_STORAGE] = FILE_STORAGE
             kwargs[RESOURCE_DOCUMENT] = 'posts'
             kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
             rep = post(**kwargs)
@@ -118,6 +122,7 @@ class TestMethods(unittest.TestCase):
         with self.app.test_request_context('/'):
             kwargs = {}
             kwargs[CONFIG_DB] = self.api.db_file
+            kwargs[CONFIG_STORAGE] = FILE_STORAGE
             kwargs[RESOURCE_DOCUMENT] = 'posts'
             kwargs[RESOURCE_DATA] = b'{\"text\": \"post 1\", \"author\": \"harry\" }'
             rep = post(**kwargs)

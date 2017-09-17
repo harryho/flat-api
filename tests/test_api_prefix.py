@@ -4,7 +4,7 @@ from flatapi import *
 import flatapi
 import requests
 import json
-from pprint import pprint as pp
+# from pprint import pprint as pp
 import os
 from flata import *
 
@@ -41,7 +41,7 @@ class TestApiWithPrefix(unittest.TestCase):
         response = self.client.get('/api/not_exist')
         data = response.data
         sc = response.status_code
-        pp(response)
+        # pp(response)
         self.assertEqual(sc, 404)
 
     def test_post(self):
@@ -51,7 +51,7 @@ class TestApiWithPrefix(unittest.TestCase):
 
         data = response.data
         sc = response.status_code
-        pp(response)
+        # pp(response)
         self.assertEqual(sc, 201)
         self.assertEqual(json.loads(data.decode()),
              {'id':1, 'text': 'post 1', 'author': 'harry'})
@@ -63,7 +63,7 @@ class TestApiWithPrefix(unittest.TestCase):
 
         data = response.data
         sc = response.status_code
-        pp(response)
+        # pp(response)
         self.assertEqual(sc, 201)
         assert len(json.loads(data.decode()))> 1  
 
@@ -78,7 +78,7 @@ class TestApiWithPrefix(unittest.TestCase):
 
         data = response.data
         sc = response.status_code
-        pp(response)
+        # pp(response)
         self.assertEqual(sc, 201)
         assert len(json.loads(data.decode()))> 1   
 
