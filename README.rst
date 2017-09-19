@@ -33,11 +33,11 @@ Quick Start
 .. code-block:: bash
 
     # Start the FlatApi - Sample 1 
-    python3 /<path_to_package>/flatapi -S MEMORY -G NO
+    $ python3 /<path_to_package>/flatapi -S MEMORY -G NO
     # Start the FlatApi - Sample 2
-    python3 /<path_to_package>/flatapi --storage MEMORY -cfgfile NO
+    $ python3 /<path_to_package>/flatapi --storage MEMORY -cfgfile NO
     # Start the FlatApi with prefix - Sample 3
-    python3 /<path_to_package>/flatapi --storage memory -cfgfile no -X api
+    $ python3 /<path_to_package>/flatapi --storage memory -cfgfile no -X api
 
 .. code-block:: bash
 
