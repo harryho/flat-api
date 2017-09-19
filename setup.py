@@ -10,12 +10,12 @@ def read(fname):
 
 requirements = [
     'Flask>=0.8',
-    'flata>=3.2.0'
+    'flata>=5.0.0'
 ]
 
 setup(
     name="flatapi",
-    version="4.0.0",
+    version="5.0.0",
     packages=find_packages(),
 
     # development metadata

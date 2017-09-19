@@ -113,13 +113,15 @@ def server_api(prefix, urls, db, storage, cache):
     :type db: string or bytes
     :param storage: The storage option: FILE | MEMORY
     :type storage: string or bytes
+    :param cache: The cache middleware for memory storage
+    :type cache: CachingMiddleware
     """
 
     def restapi(**kwargs):
         _prefix = prefix
         _urls = urls
         _db = db
-        _storage = storage
+        _storage = storage if not cache else None
         _cache = cache
 
         response = None
@@ -146,6 +148,10 @@ def server_api(prefix, urls, db, storage, cache):
             if path.startswith(_prefix + _url):
                 arg_dict[RESOURCE_DOCUMENT] = _url[_url.rfind('/')+1:]
                 break
+
+        if RESOURCE_DOCUMENT not in arg_dict :
+            if RESOURCE_QUERY in arg_dict and RESOURCE_DOCUMENT in arg_dict[RESOURCE_QUERY]:
+                arg_dict[RESOURCE_DOCUMENT] = arg_dict[RESOURCE_QUERY].pop(RESOURCE_DOCUMENT)
 
         if method in ('GET', 'HEAD'):
             response = get( **arg_dict)

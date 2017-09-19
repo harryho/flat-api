@@ -11,21 +11,16 @@ from flata.middlewares import CachingMiddleware
 
 
 
-class TestApiWithCacheMemoeryStorage(unittest.TestCase):
+class TestApiNoConfig(unittest.TestCase):
     def setUp(self):
-        this_dir = os.path.dirname(os.path.realpath(__file__))
-        cfg_file = os.path.join(this_dir, 'test.memory.config.json')
-
         app = Flask(__name__)
-        self.api = FlatApi(app, cfg_file = cfg_file)
+        self.api = FlatApi(app, cfg_file = '', prefix='', storage=MEMORY_STORAGE, no_cfg=True)
         self.db = Flata(storage = self.api.cache)
         self.client = app.test_client()
 
     def tearDown(self):
         self.db.close()
-
-        if os.path.exists(self.api.db_file):
-            os.remove(self.api.db_file)
+        self.api.cache.close()
 
 
     def test_get_empty_result(self):
@@ -37,12 +32,13 @@ class TestApiWithCacheMemoeryStorage(unittest.TestCase):
         self.assertEqual(sc, 200)
         self.assertEqual(json.loads(data.decode()), [])
 
-    def test_get_404_error(self):
-        response = self.client.get('/not_exist')
+    def test_get_no_data(self):
+        response = self.client.get('/no_data')
         data = response.data
         sc = response.status_code
         # pp(response)
-        self.assertEqual(sc, 404)
+        self.assertEqual(sc, 200)
+        self.assertEqual(json.loads(data.decode()), [])
 
     def test_post(self):
         self.db.purge_tables()
