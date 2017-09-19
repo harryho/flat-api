@@ -35,6 +35,8 @@ Quick Start
     python3 /<path_to_package>/flatapi -S MEMORY -G NO
     # Start the FlatApi - Sample 2
     python3 /<path_to_package>/flatapi --storage MEMORY -cfgfile NO
+    # Start the FlatApi with prefix - Sample 3
+    python3 /<path_to_package>/flatapi --storage memory -cfgfile no -X api
 
 .. code-block:: bash
 
@@ -87,6 +89,7 @@ Quick Start
 
     # Delete 
     $ curl -X DELETE http://localhost:5000/posts 
+
 
 
 Custom Configuration

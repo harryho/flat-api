@@ -117,7 +117,8 @@ class FlatApi(object):
                         self.db = data[CONFIG_DB] if CONFIG_DB in data else DEFAULT_DB
                         self.db_file = os.path.join(self.this_directory, self.db)
                         self.storage = data[CONFIG_STORAGE] if CONFIG_STORAGE in data else FILE_STORAGE
-                        self.cache = self.cache or (CachingMiddleware(MemoryStorage)() if self.storage == MEMORY_STORAGE else None)
+                        self.cache = self.cache or (CachingMiddleware(MemoryStorage)() if self.storage \
+                            and self.storage.upper() == MEMORY_STORAGE else None)
 
                         if self.prefix and not self.prefix.startswith('/'):
                             self.prefix =  '/' + self.prefix
