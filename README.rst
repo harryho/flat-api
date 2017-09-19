@@ -31,6 +31,7 @@ Quick Start
 - Launch FlatApi without configuration
 
 .. code-block:: bash
+
     # Start the FlatApi - Sample 1 
     python3 /<path_to_package>/flatapi -S MEMORY -G NO
     # Start the FlatApi - Sample 2
