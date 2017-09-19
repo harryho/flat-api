@@ -23,15 +23,3 @@ def expected_failure(test):
 
 
 
-
-# @pytest.fixture
-# def db():
-#     db_ = Flata('test.db.json', storage=MemoryStorage)
-#     db_.purge_tables()
-#     return db_
-
-
-# @pytest.fixture
-# def storage():
-#     _storage = CachingMiddleware(MemoryStorage)
-#     return _storage()  # Initialize MemoryStorage

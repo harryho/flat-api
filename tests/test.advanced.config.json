@@ -1,6 +1,6 @@
 {
     "db": "test.advanced.db.json",
-    "prefix": "/api",
+    "prefix": "api",
     "routes":[
         "/posts",
         "/comments"

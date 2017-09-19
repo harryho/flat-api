@@ -1,37 +1,3 @@
-"""
-FlatApi (version: 3.1.3)
-
-FlatApi is a zero-coding, restful fake api web server for developers.
-
-FlatApi provides most common GET, POST, PUT, DELETE methods with a configurable
-backend. It has support for handy querying as well.
-
-.. codeauthor:: Harry Ho <harry.ho_long@yahoo.com>
-
-Usage example:
-
-- Create a file *config.json* as following sample
-
-{
-    "db": "db.json",
-    "routes":[
-        "/posts",
-        "/comments"
-    ]
-}
-
-- Install the server
-
-$ pip install flatapi
-
-- Launch the server
-
-$ python flatapi
-
-
-
-"""
-
 from flask import Flask
 from flask import abort, request, make_response, current_app , Response
 
@@ -54,7 +20,7 @@ from flatapi.settings import *
 class FlatApi(object):    
     """" FlatApi is the restful API for python developers """
 
-    def __init__(self, app=None, cfg_file = '', prefix='', storage='', no_cfg = False ):
+    def __init__(self, app=None, cfg_file = '', prefix='', storage='' ):
         """
         This method is used to initialize FlatApi instance
         :param app: The instance of Flask
@@ -74,26 +40,39 @@ class FlatApi(object):
         self.prefix = prefix or DEFAULT_API_PREFIX
         self.default_mediatype = DEFAULT_MEDIATYPE
         self.app = None
-        self.config_file = cfg_file or  DEFAULT_CONFIG if not no_cfg else None
+        self.config_file = cfg_file # or  DEFAULT_CONFIG if not no_cfg else None
         self.db_file = None
         self.db = DEFAULT_DB
         self.storage = storage
         self.cache = CachingMiddleware(MemoryStorage)() if storage == MEMORY_STORAGE else None
 
+        if self.prefix and not self.prefix.startswith('/'):
+            self.prefix =  '/' + self.prefix
+            
         if app is not None:
             self.app = app
             self.load_config()
             self.add_routes()
 
+
             print('\n \(^_^)/ Hi \n')
             print('Loading %s is done. \n' % (ntpath.basename(self.config_file) if self.config_file else '') )
+            if not self.config_file:
+                print('There is no config file found. FlatApi starts with built-in configuration.\n')
 
             if len(self.urls) > 0:
                 print('Resource : ')
+            else:
+                print('Resource : ')
+                print('%s/<string:doc> -- The doc is the collection name\n \
+                    you want to post or put the object. '% (self.prefix))
+                print('%s/<string:doc>/<int:id> --The id is the unique id for query or delete. '% (self.prefix))
 
             for url in self.urls:
                 print(' %s%s ' % ( self.prefix, url))
             
+            
+
             if self.storage == FILE_STORAGE:
                 print('\nDatabase: %s \n' % self.db)
             else:
@@ -139,6 +118,9 @@ class FlatApi(object):
                         self.db_file = os.path.join(self.this_directory, self.db)
                         self.storage = data[CONFIG_STORAGE] if CONFIG_STORAGE in data else FILE_STORAGE
                         self.cache = self.cache or (CachingMiddleware(MemoryStorage)() if self.storage == MEMORY_STORAGE else None)
+
+                        if self.prefix and not self.prefix.startswith('/'):
+                            self.prefix =  '/' + self.prefix
                     except ValueError as e:
                         raise ValueError('The routes is missing in the %s file. '% self.config_file )
                 else:

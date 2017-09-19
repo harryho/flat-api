@@ -13,7 +13,7 @@ except:
 import os
 import pytest
 
-class TestApi(unittest.TestCase):
+class TestFlatApi(unittest.TestCase):
     def setUp(self):
         pass
 
@@ -50,16 +50,25 @@ class TestApi(unittest.TestCase):
         assert len(server.urls) == 0
         assert len(server.routes) == 0 
 
-    def test_init_no_config(self):
-        # self.this_dir = os.path.dirname(os.path.realpath(__file__))
-        # self.cfg_file = os.path.join(self.this_dir, 'test.simple.config.json')
+    def test_init_no_config_no_api_params(self):
         
-        server = FlatApi(Flask(__name__), cfg_file = '', storage='MEMORY', no_cfg=True)
+        server = FlatApi(Flask(__name__))
         assert server.app is not None
         assert server.prefix == flatapi.DEFAULT_API_PREFIX
         assert server.db == flatapi.DEFAULT_DB
         assert len(server.urls) == 0
-        assert len(server.routes) == 3 
+        assert len(server.routes) == 3
+        assert server.cache == None
+
+    def test_init_no_config(self):
+        
+        server = FlatApi(Flask(__name__), cfg_file = '', storage='MEMORY')
+        assert server.app is not None
+        assert server.prefix == flatapi.DEFAULT_API_PREFIX
+        assert server.db == flatapi.DEFAULT_DB
+        assert len(server.urls) == 0
+        assert len(server.routes) == 3
+        assert isinstance(server.cache, (CachingMiddleware, MemoryStorage))
     def test_init_momery_config(self):
         self.this_dir = os.path.dirname(os.path.realpath(__file__))
         self.cfg_file = os.path.join(self.this_dir, 'test.memory.config.json')
@@ -78,7 +87,7 @@ class TestApi(unittest.TestCase):
         assert server.db == 'db.json'
         assert server.storage == MEMORY_STORAGE
         assert len(server.urls) == 0
-        assert len(server.routes) == 0
+        assert len(server.routes) == 3
         assert isinstance(server.cache, (CachingMiddleware, MemoryStorage))
 
     def test_init_advanced_config(self):

@@ -13,7 +13,7 @@ from flata.middlewares import CachingMiddleware
 class TestApiWithPrefixNoConfig(unittest.TestCase):
     def setUp(self):
         app = Flask(__name__)
-        self.api = FlatApi(app, cfg_file = '', prefix='/api', storage=MEMORY_STORAGE, no_cfg=True)
+        self.api = FlatApi(app, cfg_file = '', prefix='/api', storage=MEMORY_STORAGE)
         self.db = Flata(storage = self.api.cache)
         self.client = app.test_client()
 

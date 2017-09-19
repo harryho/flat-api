@@ -16,7 +16,7 @@ class TestApiWithPrefix(unittest.TestCase):
         cfg_file = os.path.join(this_dir, 'test.config.json')
 
         app = Flask(__name__)
-        self.api = FlatApi(app, cfg_file = cfg_file, prefix ='/api')
+        self.api = FlatApi(app, cfg_file = cfg_file, prefix ='api')
         self.db = Flata(self.api.db_file)
         self.client = app.test_client()
 

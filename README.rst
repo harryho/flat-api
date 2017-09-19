@@ -3,12 +3,12 @@ FlatApi
 
 |Build Status| |Coverage| |Version|
 
-FlatApi is a **zero coding** restful API server inspired by Json-Server_ and Eve_. It is designed to be used as fake restful api for development, especially for people want to use Python stack. Setup process is **less than 1 minute**. 
+FlatApi is a **zero coding** and **zero configuration** restful API server inspired by Json-Server_ and Eve_. It is designed to be used as fake restful api for development, especially for people want to use Python stack. Setup process is **less than 10 seconds**. 
 
 
 FlatApi is:
 
-- **Zero coding to setup Restful API** FlatApi is designed to use without coding. You just need one config to setup all endpoints you need, then you can use it immediately. 
+- **Zero coding and configuration to setup Restful API** FlatApi is designed to use without coding and configuration by default. You just need one config to setup all endpoints you need, then you can use it immediately. 
 
 - **Flask based web server** FlatApi is built on the top of _Flask
 
@@ -16,43 +16,40 @@ FlatApi is:
 
 - **Caching memory storage availble** FlatApi supports caching momery storage after version 4.0.0. 
 
+Install Package
+***************
+
+.. code-block:: bash
+
+    $ pip uninstall flatapi
+    $ pip install --no-cache-dir flatapi
+
 
 Quick Start
 ***********
 
-- Create config.json as sample below (There is a sample in the repo as well)
+- Launch FlatApi without configuration
 
-.. code-block:: json
-
-    {
-        "db": "db.json",
-        "routes":[
-            "/posts",
-            "/comments"
-        ]
-    }
-
-- Install FlatApi
+.. code-block:: bash
+    # Start the FlatApi - Sample 1 
+    python3 /<path_to_package>/flatapi -S MEMORY -G NO
+    # Start the FlatApi - Sample 2
+    python3 /<path_to_package>/flatapi --storage MEMORY -cfgfile NO
 
 .. code-block:: bash
 
-    $ pip install flatapi
+    \(^_^)/ Hi
 
+    Loading  is done.
 
-- Launch FlatApi. Please make sure the config.json is under current diretory
-
-.. code-block:: bash
-
-    $ python3 flatapi
-     \(^_^)/ Hi
-
-    Loading config.json is done.
+    There is no config file found. Flat Api uses internal configuration.
 
     Resource :
-    /posts
-    /comments
+    /<string:doc> -- The doc is the collection name
+                        you want to post or put the object.
+    /<string:doc>/<int:id> --The id is the unique id for query or delete.
 
-    Database: db.json
+    Database: Memory
 
     * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 
@@ -92,6 +89,42 @@ Quick Start
     $ curl -X DELETE http://localhost:5000/posts 
 
 
+Custom Configuration
+********************
+
+- Create config.json as sample below (There is a sample in the repo as well)
+
+.. code-block:: json
+
+    {
+        "db": "db.json",
+        "routes":[
+            "/posts",
+            "/comments"
+        ]
+    }
+
+- Launch FlatApi. Please make sure the config.json is under current diretory
+
+.. code-block:: bash
+    
+    $ python3 /<path_to_package>/flatapi 
+
+     \(^_^)/ Hi
+
+    Loading config.json is done.
+
+    Resource :
+    /posts
+    /comments
+
+    Database: db.json
+
+    * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+
+
+
+
 Advanced usage
 **************
 
@@ -109,7 +142,7 @@ Advanced usage
 
     {
         "db":"db.json",
-        "prefix": "/api",
+        "prefix": "api",
         "routes":[
             "/posts",
             "/comments"
@@ -272,19 +305,7 @@ Advanced usage
     }   
 
 
-Stable Release
-**************
 
-- |FlatApi 4.0.0|
-
-Old Version
-**************
-
-- |FlatApi 3.1.1|
-
-.. |FlatApi 4.0.0| :target: https://pypi.python.org/pypi?:action=display&name=flatapi&version=4.0.0
-.. |FlatApi 3.0.0| :target: https://pypi.python.org/pypi?:action=display&name=flatapi&version=3.0.0
-.. |FlatApi 3.1.1| :target: https://pypi.python.org/pypi?:action=display&name=flatapi&version=3.1.1
 
 .. |Build Status| image:: https://travis-ci.org/harryho/flat-api.svg?branch=master
     :target: https://travis-ci.org/harryho/flat-api
